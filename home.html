@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grailed: Online Marketplace to Buy Fashion</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #fff;
+            color: #000;
+            line-height: 1.4;
+        }
+
+        /* Header */
+        .header {
+            background: #fff;
+            border-bottom: 1px solid #e5e5e5;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 60px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #000;
+            text-decoration: none;
+        }
+
+        .search-container {
+            flex: 1;
+            max-width: 400px;
+            margin: 0 40px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            background: #f8f8f8;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #000;
+            background: #fff;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #000;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: opacity 0.2s;
+        }
+
+        .nav-link:hover {
+            opacity: 0.7;
+        }
+
+        .sell-btn {
+            background: #000;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .sell-btn:hover {
+            background: #333;
+        }
+
+        /* Mobile header elements */
+        .mobile-icons {
+            display: none;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .mobile-icon {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            fill: #000;
+            transition: opacity 0.2s;
+        }
+
+        .mobile-icon:hover {
+            opacity: 0.7;
+        }
+
+        /* Main Navigation */
+        .main-nav {
+            background: #fff;
+            border-bottom: 1px solid #e5e5e5;
+            padding: 0 20px;
+        }
+
+        .main-nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .nav-category {
+            position: relative;
+            padding: 15px 0;
+        }
+
+        .nav-category > a {
+            color: #000;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #000 0%, #333 100%);
+            color: #fff;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn {
+            padding: 16px 32px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .cta-primary {
+            background: #fff;
+            color: #000;
+        }
+
+        .cta-primary:hover {
+            background: #f0f0f0;
+            transform: translateY(-2px);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: #fff;
+            border: 2px solid #fff;
+        }
+
+        .cta-secondary:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        /* Featured Brands */
+        .featured-brands {
+            padding: 60px 20px;
+            background: #f8f8f8;
+        }
+
+        .section-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 50px;
+            color: #000;
+        }
+
+        .brands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .brand-card {
+            background: #fff;
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 8px;
+            transition: all 0.3s;
+            border: 1px solid #e5e5e5;
+        }
+
+        .brand-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .brand-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #000;
+        }
+
+        /* Product Grid */
+        .trending-items {
+            padding: 60px 20px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            margin-top: 40px;
+            padding: 6rem;
+        }
+
+        .product-card {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s;
+            border: 1px solid #e5e5e5;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 300px;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: #ccc;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-brand {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+
+        .product-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #000;
+        }
+
+        .product-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: #000;
+        }
+
+        .product-size {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        /* Footer */
+        .footer {
+            background: #000;
+            color: #fff;
+            padding: 60px 20px 30px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: #fff;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 30px;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                justify-content: space-between;
+                padding: 15px 20px;
+                height: 60px;
+            }
+
+            .logo {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                font-size: 20px;
+            }
+
+            .search-container {
+                display: none;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-icons {
+                display: flex;
+            }
+
+            .main-nav {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <!-- Mobile left icons -->
+            <div class="mobile-icons">
+                <svg class="mobile-icon" viewBox="0 0 24 24">
+                    <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                </svg>
+                <svg class="mobile-icon" viewBox="0 0 24 24">
+                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                </svg>
+            </div>
+            
+            <a href="#" class="logo">RAILED</a>
+            
+            <!-- Desktop search -->
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search for anything">
+            </div>
+            
+            <!-- Desktop navigation -->
+            <nav class="nav-links">
+                <a href="#" class="nav-link">SIGN IN</a>
+                <a href="#" class="nav-link">SIGN UP</a>
+                <a href="#" class="sell-btn">Sell</a>
+            </nav>
+            
+            <!-- Mobile right icons -->
+            <div class="mobile-icons">
+                <a href="#" class="nav-link" style="font-size: 12px; margin-right: 10px;">SIGN IN</a>
+                <a href="#" class="nav-link" style="font-size: 12px; margin-right: 10px;">SIGN UP</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Navigation -->
+    <nav class="main-nav">
+        <div class="main-nav-content">
+            <div class="nav-category">
+                <a href="#">Designers</a>
+            </div>
+            <div class="nav-category">
+                <a href="#">Menswear</a>
+            </div>
+            <div class="nav-category">
+                <a href="#">Womenswear</a>
+            </div>
+            <div class="nav-category">
+                <a href="#">Sneakers</a>
+            </div>
+            <div class="nav-category">
+                <a href="#">Staff Picks</a>
+            </div>
+            <div class="nav-category">
+                <a href="#">Collections</a>
+            </div>
+            <div class="nav-category">
+                <a href="#">Editorial</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>The Global Marketplace for Fashion</h1>
+            <p>Buy, sell and discover authenticated pieces from top brands, spanning designer, vintage, streetwear and more.</p>
+            <div class="cta-buttons">
+                <a href="#" class="cta-btn cta-primary">Shop Now</a>
+                <a href="#" class="cta-btn cta-secondary">Start Selling</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Brands -->
+    <section class="featured-brands">
+        <div class="section-content">
+            <h2 class="section-title">Shop Popular Designers</h2>
+            <div class="brands-grid">
+                <div class="brand-card">
+                    <div class="brand-name">Supreme</div>
+                </div>
+                <div class="brand-card">
+                    <div class="brand-name">Chrome Hearts</div>
+                </div>
+                <div class="brand-card">
+                    <div class="brand-name">Rick Owens</div>
+                </div>
+                <div class="brand-card">
+                    <div class="brand-name">Balenciaga</div>
+                </div>
+                <div class="brand-card">
+                    <div class="brand-name">Stone Island</div>
+                </div>
+                <div class="brand-card">
+                    <div class="brand-name">Comme des Garçons</div>
+                </div>
+                <div class="brand-card">
+                    <div class="brand-name">Maison Margiela</div>
+                </div>
+                <div class="brand-card">
+                    <div class="brand-name">Kapital</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trending Items -->
+    <section class="trending-items">
+        <div class="section-content">
+            <h2 class="section-title">Trending Now</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-image">👕</div>
+                    <div class="product-info">
+                        <div class="product-brand">Supreme</div>
+                        <div class="product-title">Box Logo Hoodie</div>
+                        <div class="product-price">$450</div>
+                        <div class="product-size">Size M</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">👟</div>
+                    <div class="product-info">
+                        <div class="product-brand">Nike</div>
+                        <div class="product-title">Air Jordan 1 Retro High</div>
+                        <div class="product-price">$325</div>
+                        <div class="product-size">Size 10</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">🧥</div>
+                    <div class="product-info">
+                        <div class="product-brand">Stone Island</div>
+                        <div class="product-title">Nylon Metal Jacket</div>
+                        <div class="product-price">$275</div>
+                        <div class="product-size">Size L</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">👖</div>
+                    <div class="product-info">
+                        <div class="product-brand">Chrome Hearts</div>
+                        <div class="product-title">Cross Patch Jeans</div>
+                        <div class="product-price">$850</div>
+                        <div class="product-size">Size 32</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Size Guide</a></li>
+                        <li><a href="#">Authentication</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Selling</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Start Selling</a></li>
+                        <li><a href="#">Seller Fees</a></li>
+                        <li><a href="#">Seller Protection</a></li>
+                        <li><a href="#">Seller Guide</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Prohibited Items</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Railed. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Add some interactive behavior
+        document.addEventListener('DOMContentLoaded', function() {
+            // Search input focus effect
+            const searchInput = document.querySelector('.search-input');
+            searchInput.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.02)';
+            });
+            
+            searchInput.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'scale(1)';
+            });
+
+            // Product card hover effects
+            const productCards = document.querySelectorAll('.product-card');
+            productCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.cursor = 'pointer';
+                });
+            });
+
+            // Brand card click effect
+            const brandCards = document.querySelectorAll('.brand-card');
+            brandCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'translateY(-5px)';
+                    }, 100);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
