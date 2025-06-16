@@ -20,8 +20,8 @@
         .account-sidebar {
             background: #f8f8f8;
             border-radius: 12px;
-            padding: 40px 30px;
-            height: fit-content;
+            padding: 25px 30px;
+            height: 32rem;
             position: sticky;
             top: 100px;
         }
@@ -858,3 +858,162 @@
             </section>
         </main>
     </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Size Guide</a></li>
+                        <li><a href="#">Authentication</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Selling</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Start Selling</a></li>
+                        <li><a href="#">Seller Fees</a></li>
+                        <li><a href="#">Seller Protection</a></li>
+                        <li><a href="#">Seller Guide</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Prohibited Items</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Railed. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // Profile image upload functionality
+        document.querySelector('.upload-btn').addEventListener('click', function() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/jpeg,image/png';
+            input.onchange = function(e) {
+                if (e.target.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.querySelector('.profile-image').innerHTML = `<img src="${e.target.result}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" alt="Profile">`;
+                    };
+                    reader.readAsDataURL(e.target.files[0]);
+                }
+            };
+            input.click();
+        });
+
+        // Form validation and submission
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Simple validation
+                const requiredInputs = this.querySelectorAll('input[required], .form-input');
+                let isValid = true;
+                
+                requiredInputs.forEach(input => {
+                    if (input.type !== 'checkbox' && input.value.trim() === '') {
+                        input.style.borderColor = '#dc3545';
+                        isValid = false;
+                    } else {
+                        input.style.borderColor = '#ddd';
+                    }
+                });
+                
+                if (isValid) {
+                    // Show success message
+                    const button = this.querySelector('button[type="submit"]');
+                    const originalText = button.textContent;
+                    button.textContent = 'Saved!';
+                    button.style.background = '#28a745';
+                    
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.style.background = '';
+                    }, 2000);
+                }
+            });
+        });
+
+        // Set default address/payment method
+        document.querySelectorAll('.btn-small').forEach(btn => {
+            if (btn.textContent === 'Set Default') {
+                btn.addEventListener('click', function() {
+                    // Remove default from all cards
+                    document.querySelectorAll('.address-card, .payment-card').forEach(card => {
+                        card.classList.remove('default');
+                        const badge = card.querySelector('.default-badge');
+                        if (badge) badge.remove();
+                    });
+                    
+                    // Add default to clicked card
+                    const card = this.closest('.address-card');
+                    card.classList.add('default');
+                    card.querySelector('.address-header').innerHTML += '<span class="default-badge">Default</span>';
+                    
+                    // Update button text
+                    this.textContent = 'Default';
+                    this.disabled = true;
+                });
+            }
+        });
+
+        // Delete/Deactivate account confirmations
+        document.querySelector('.btn-danger').addEventListener('click', function() {
+            if (confirm('Are you absolutely sure you want to delete your account? This action cannot be undone.')) {
+                alert('Account deletion process initiated. You will receive a confirmation email.');
+            }
+        });
+
+        document.querySelector('.btn-secondary[style*="color: #dc3545"]').addEventListener('click', function() {
+            if (confirm('Are you sure you want to deactivate your account?')) {
+                alert('Account has been deactivated. You can reactivate by logging in again.');
+            }
+        });
+
+        // Dark mode toggle functionality
+        document.getElementById('dark-mode').addEventListener('change', function() {
+            if (this.checked) {
+                document.body.style.background = '#1a1a1a';
+                document.body.style.color = '#fff';
+            } else {
+                document.body.style.background = '#fff';  
+                document.body.style.color = '#333';
+            }
+        });
+
+        // Auto-save functionality for form inputs
+        document.querySelectorAll('.form-input, .form-textarea').forEach(input => {
+            let timeout;
+            input.addEventListener('input', function() {
+                clearTimeout(timeout);
+                if (document.getElementById('auto-save').checked) {
+                    timeout = setTimeout(() => {
+                        // Simulate auto-save
+                        console.log('Auto-saved:', this.name || this.placeholder);
+                    }, 1000);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
