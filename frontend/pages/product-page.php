@@ -484,6 +484,8 @@
     </style>
 </head>
 <body>
+    <?php include 'modal.php'; ?>
+
     <!-- Header -->
     <header class="header">
         <div class="header-content">

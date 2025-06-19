@@ -376,6 +376,7 @@
     </style>
 </head>
 <body>
+    <?php include 'modal.php'; ?>
     <!-- Header - Exact same as sell page -->
     <header class="header">
         <div class="header-content">
