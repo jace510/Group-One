@@ -1,10 +1,12 @@
+<?php include '../backend/auth/header.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Railed: Online Marketplace to Buy Fashion</title>
-    <link rel="stylesheet" href="../index.css">
+    <link rel="stylesheet" href="index.css">
     <style>
         .product-grid {
             display: grid;
@@ -16,65 +18,14 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="header-content">
-            <!-- Mobile left icons -->
-            <div class="mobile-icons">
-                <svg class="mobile-icon" viewBox="0 0 24 24">
-                    <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
-                </svg>
-                <svg class="mobile-icon" viewBox="0 0 24 24">
-                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-                </svg>
-            </div>
-            
-            <a href="#" class="logo">RAILED</a>
-            
-            <!-- Desktop search -->
-            <div class="search-container">
-                <input type="text" class="search-input" placeholder="Search for anything">
-            </div>
-            
-            <!-- Desktop navigation -->
-            <nav class="nav-links">
-                <a href="#" class="nav-link">SIGN IN</a>
-                <a href="#" class="nav-link">SIGN UP</a>
-                <a href="#" class="sell-btn">Sell</a>
-            </nav>
-            
-            <!-- Mobile right icons -->
-            <div class="mobile-icons">
-                <a href="#" class="nav-link" style="font-size: 12px; margin-right: 10px;">SIGN IN</a>
-                <a href="#" class="nav-link" style="font-size: 12px; margin-right: 10px;">SIGN UP</a>
-            </div>
-        </div>
-    </header>
 
     <!-- Main Navigation -->
     <nav class="main-nav">
         <div class="main-nav-content">
-            <div class="nav-category">
-                <a href="#">Designers</a>
-            </div>
-            <div class="nav-category">
-                <a href="#">Menswear</a>
-            </div>
-            <div class="nav-category">
-                <a href="#">Womenswear</a>
-            </div>
-            <div class="nav-category">
-                <a href="#">Sneakers</a>
-            </div>
-            <div class="nav-category">
-                <a href="#">Staff Picks</a>
-            </div>
-            <div class="nav-category">
-                <a href="#">Collections</a>
-            </div>
-            <div class="nav-category">
-                <a href="#">Editorial</a>
-            </div>
+            <div class="nav-category"><a href="#">Designers</a></div>
+            <div class="nav-category"><a href="#">Menswear</a></div>
+            <div class="nav-category"><a href="#">Womenswear</a></div>
+            <div class="nav-category"><a href="#">Sale</a></div>
         </div>
     </nav>
 
@@ -82,7 +33,8 @@
     <section class="hero">
         <div class="hero-content">
             <h1>The Global Marketplace for Fashion</h1>
-            <p>Buy, sell and discover authenticated pieces from top brands, spanning designer, vintage, streetwear and more.</p>
+            <p>Buy, sell and discover authenticated pieces from top brands, spanning designer, vintage, streetwear and
+                more.</p>
             <div class="cta-buttons">
                 <a href="#" class="cta-btn cta-primary">Shop Now</a>
                 <a href="#" class="cta-btn cta-secondary">Start Selling</a>
@@ -167,7 +119,6 @@
             </div>
         </div>
     </section>
-
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
@@ -214,24 +165,23 @@
             </div>
         </div>
     </footer>
-
     <script>
         // Add some interactive behavior
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Search input focus effect
             const searchInput = document.querySelector('.search-input');
-            searchInput.addEventListener('focus', function() {
+            searchInput.addEventListener('focus', function () {
                 this.parentElement.style.transform = 'scale(1.02)';
             });
-            
-            searchInput.addEventListener('blur', function() {
+
+            searchInput.addEventListener('blur', function () {
                 this.parentElement.style.transform = 'scale(1)';
             });
 
             // Product card hover effects
             const productCards = document.querySelectorAll('.product-card');
             productCards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
+                card.addEventListener('mouseenter', function () {
                     this.style.cursor = 'pointer';
                 });
             });
@@ -239,7 +189,7 @@
             // Brand card click effect
             const brandCards = document.querySelectorAll('.brand-card');
             brandCards.forEach(card => {
-                card.addEventListener('click', function() {
+                card.addEventListener('click', function () {
                     this.style.transform = 'scale(0.95)';
                     setTimeout(() => {
                         this.style.transform = 'translateY(-5px)';
@@ -248,5 +198,8 @@
             });
         });
     </script>
+    <?php include 'modal.php'; ?>
+    <script src="main.js"></script>
 </body>
+
 </html>

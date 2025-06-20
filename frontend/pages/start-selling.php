@@ -1,12 +1,17 @@
+<?php
+include '../../backend/auth/header.php';
+
+include '../modal.php';
+    ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sell Your Fashion - Railed</title>
     <link rel="stylesheet" href="../index.css">
     <style>
-       
         /* Sell Page Hero */
         .sell-hero {
             background: linear-gradient(135deg, #000 0%, #333 100%);
@@ -46,12 +51,12 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(255,255,255,0.2);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
         }
 
         .cta-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255,255,255,0.3);
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
             background: #f0f0f0;
         }
 
@@ -101,7 +106,7 @@
 
         .step-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
         }
 
         .step-card:hover::before {
@@ -180,13 +185,13 @@
         .benefit-card {
             text-align: center;
             padding: 40px 30px;
-            background: rgba(255,255,255,0.05);
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 12px;
             transition: all 0.3s;
         }
 
         .benefit-card:hover {
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             transform: translateY(-5px);
         }
 
@@ -208,100 +213,48 @@
             line-height: 1.6;
         }
 
-            .sell-hero h1 {
-                font-size: 36px;
-            }
+        .sell-hero h1 {
+            font-size: 36px;
+        }
 
-            .sell-hero p {
-                font-size: 18px;
-            }
+        .sell-hero p {
+            font-size: 18px;
+        }
 
-            .steps-grid {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
+        .steps-grid {
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
 
-            .step-card {
-                padding: 40px 30px;
-            }
+        .step-card {
+            padding: 40px 30px;
+        }
 
-            .benefits-grid {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-        
+        .benefits-grid {
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
     </style>
 </head>
-<body>
-    <?php include 'modal.php'; ?>
 
-    <!-- Header -->
-    <header class="header">
-        <div class="header-content">
-            <!-- Mobile left icons -->
-            <div class="mobile-icons">
-                <svg class="mobile-icon" viewBox="0 0 24 24">
-                    <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
-                </svg>
-                <svg class="mobile-icon" viewBox="0 0 24 24">
-                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-                </svg>
-            </div>
-            
-            <a href="#" class="logo">RAILED</a>
-            
-            <!-- Desktop search -->
-            <div class="search-container">
-                <input type="text" class="search-input" placeholder="Search for anything">
-            </div>
-            
-            <!-- Desktop navigation -->
-            <nav class="nav-links">
-                <a href="#" class="nav-link">SIGN IN</a>
-                <a href="#" class="nav-link">SIGN UP</a>
-                <a href="#" class="sell-btn">Sell</a>
-            </nav>
-            
-            <!-- Mobile right icons -->
-            <div class="mobile-icons">
-                <a href="#" class="nav-link" style="font-size: 12px; margin-right: 10px;">SIGN IN</a>
-                <a href="#" class="nav-link" style="font-size: 12px; margin-right: 10px;">SIGN UP</a>
-            </div>
-        </div>
-    </header>
+<body>
+
 
     <!-- Main Navigation -->
     <nav class="main-nav">
         <div class="main-nav-content">
-            <div class="nav-category">
-                <a href="#">Designers</a>
-            </div>
-            <div class="nav-category">
-                <a href="#">Menswear</a>
-            </div>
-            <div class="nav-category">
-                <a href="#">Womenswear</a>
-            </div>
-            <div class="nav-category">
-                <a href="#">Sneakers</a>
-            </div>
-            <div class="nav-category">
-                <a href="#">Staff Picks</a>
-            </div>
-            <div class="nav-category">
-                <a href="#">Collections</a>
-            </div>
-            <div class="nav-category">
-                <a href="#">Editorial</a>
-            </div>
+            <div class="nav-category"><a href="#">Designers</a></div>
+            <div class="nav-category"><a href="#">Menswear</a></div>
+            <div class="nav-category"><a href="#">Womenswear</a></div>
+            <div class="nav-category"><a href="#">Sale</a></div>
         </div>
     </nav>
-
     <!-- Sell Hero Section -->
     <section class="sell-hero">
         <div class="sell-hero-content">
             <h1>Start Selling on Railed</h1>
-            <p>Turn your closet into cash. Sell authentic fashion pieces to buyers worldwide with our trusted marketplace.</p>
+            <p>Turn your closet into cash. Sell authentic fashion pieces to buyers worldwide with our trusted
+                marketplace.</p>
             <a href="#" class="cta-button" onclick="goToListingPage()">Start Selling Now</a>
         </div>
     </section>
@@ -315,19 +268,22 @@
                     <div class="step-number">1</div>
                     <div class="step-icon">📸</div>
                     <div class="step-title">List Your Item</div>
-                    <div class="step-description">Upload photos and details of your authentic fashion pieces. Our team will verify authenticity to ensure buyer confidence.</div>
+                    <div class="step-description">Upload photos and details of your authentic fashion pieces. Our team
+                        will verify authenticity to ensure buyer confidence.</div>
                 </div>
                 <div class="step-card">
                     <div class="step-number">2</div>
                     <div class="step-icon">💰</div>
                     <div class="step-title">Set Your Price</div>
-                    <div class="step-description">Price competitively based on condition and market demand. We provide pricing guidance to help maximize your earnings.</div>
+                    <div class="step-description">Price competitively based on condition and market demand. We provide
+                        pricing guidance to help maximize your earnings.</div>
                 </div>
                 <div class="step-card">
                     <div class="step-number">3</div>
                     <div class="step-title">Ship & Get Paid</div>
                     <div class="step-icon">📦</div>
-                    <div class="step-description">Once sold, ship your item with our prepaid label and get paid within 24 hours of delivery confirmation.</div>
+                    <div class="step-description">Once sold, ship your item with our prepaid label and get paid within
+                        24 hours of delivery confirmation.</div>
                 </div>
             </div>
             <div class="steps-cta">
@@ -344,22 +300,26 @@
                 <div class="benefit-card">
                     <div class="benefit-icon">🔒</div>
                     <div class="benefit-title">Secure Transactions</div>
-                    <div class="benefit-description">All payments are processed securely and held until the buyer confirms receipt, protecting both parties.</div>
+                    <div class="benefit-description">All payments are processed securely and held until the buyer
+                        confirms receipt, protecting both parties.</div>
                 </div>
                 <div class="benefit-card">
                     <div class="benefit-icon">✅</div>
                     <div class="benefit-title">Authentication Service</div>
-                    <div class="benefit-description">Our experts authenticate every item to ensure buyer confidence and maintain marketplace integrity.</div>
+                    <div class="benefit-description">Our experts authenticate every item to ensure buyer confidence and
+                        maintain marketplace integrity.</div>
                 </div>
                 <div class="benefit-card">
                     <div class="benefit-icon">🌍</div>
                     <div class="benefit-title">Global Reach</div>
-                    <div class="benefit-description">Access buyers from around the world with our international shipping options and localized support.</div>
+                    <div class="benefit-description">Access buyers from around the world with our international shipping
+                        options and localized support.</div>
                 </div>
                 <div class="benefit-card">
                     <div class="benefit-icon">📈</div>
                     <div class="benefit-title">Competitive Fees</div>
-                    <div class="benefit-description">Keep more of your earnings with our transparent and competitive seller fees - no hidden charges.</div>
+                    <div class="benefit-description">Keep more of your earnings with our transparent and competitive
+                        seller fees - no hidden charges.</div>
                 </div>
             </div>
         </div>
@@ -413,15 +373,15 @@
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Search input focus effect
             const searchInput = document.querySelector('.search-input');
             if (searchInput) {
-                searchInput.addEventListener('focus', function() {
+                searchInput.addEventListener('focus', function () {
                     this.parentElement.style.transform = 'scale(1.02)';
                 });
-                
-                searchInput.addEventListener('blur', function() {
+
+                searchInput.addEventListener('blur', function () {
                     this.parentElement.style.transform = 'scale(1)';
                 });
             }
@@ -429,7 +389,7 @@
             // Step card hover effects
             const stepCards = document.querySelectorAll('.step-card');
             stepCards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
+                card.addEventListener('mouseenter', function () {
                     this.style.cursor = 'pointer';
                 });
             });
@@ -465,4 +425,5 @@
         }
     </script>
 </body>
+
 </html>

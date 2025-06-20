@@ -1,13 +1,17 @@
+<?php
+include '../../backend/auth/header.php';
+include '../modal.php';
+    ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Railed: Browse Catalog</title>
     <link rel="stylesheet" href="../index.css">
     <style>
-
-        .nav-category.active > a {
+        .nav-category.active>a {
             color: #000;
             border-bottom: 2px solid #000;
             padding-bottom: 13px;
@@ -170,7 +174,7 @@
             background: #000;
             color: #fff;
             border-color: #000;
-        }       
+        }
 
         .product-grid.list-view {
             grid-template-columns: 1fr;
@@ -286,9 +290,9 @@
             border-color: #000;
         }
 
-        
 
-       
+
+
         /* Responsive */
         @media (max-width: 968px) {
             .catalog-container {
@@ -313,82 +317,33 @@
             }
         }
 
-        
-            .product-grid {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                gap: 15px;
-            }
 
-            .product-card.list-item {
-                grid-template-columns: 1fr;
-                height: auto;
-            }
+        .product-grid {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
 
-            .filters-sidebar {
-                padding: 20px;
-            }
-        
+        .product-card.list-item {
+            grid-template-columns: 1fr;
+            height: auto;
+        }
+
+        .filters-sidebar {
+            padding: 20px;
+        }
     </style>
 </head>
+
 <body>
-    <?php include 'modal.php'; ?>
 
-    <!-- Header -->
-    <header class="header">
-        <div class="header-content">
-            <div class="mobile-icons">
-                <svg class="mobile-icon" viewBox="0 0 24 24">
-                    <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
-                </svg>
-                <svg class="mobile-icon" viewBox="0 0 24 24">
-                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-                </svg>
-            </div>
-
-            <a href="index.html" class="logo">RAILED</a>
-            
-            <div class="search-container">
-                <input type="text" class="search-input" placeholder="Search for anything" id="searchInput">
-            </div>
-            
-            <nav class="nav-links">
-                <a href="login.html" class="nav-link">SIGN IN</a>
-                <a href="login.html" class="nav-link">SIGN UP</a>
-                <a href="sell.html" class="sell-btn">Sell</a>
-            </nav>
-
-            <!-- Mobile right icons -->
-            <div class="mobile-icons">
-                <a href="#" class="nav-link" style="font-size: 12px; margin-right: 10px;">SIGN IN</a>
-                <a href="#" class="nav-link" style="font-size: 12px; margin-right: 10px;">SIGN UP</a>
-            </div>
-        </div>
-    </header>
 
     <!-- Main Navigation -->
     <nav class="main-nav">
         <div class="main-nav-content">
-            <div class="nav-category">
-                <a href="#">Designers</a>
-            </div>
-            <div class="nav-category active">
-                <a href="#">Menswear</a>
-            </div>
-            <div class="nav-category">
-                <a href="#">Womenswear</a>
-            </div>
-            <div class="nav-category">
-                <a href="#">Sneakers</a>
-            </div>
-            <div class="nav-category">
-                <a href="#">Staff Picks</a>
-            </div>
-            <div class="nav-category">
-                <a href="#">Collections</a>
-            </div>
-            <div class="nav-category">
-                <a href="#">Editorial</a>
-            </div>
+            <div class="nav-category"><a href="#">Designers</a></div>
+            <div class="nav-category"><a href="#">Menswear</a></div>
+            <div class="nav-category"><a href="#">Womenswear</a></div>
+            <div class="nav-category"><a href="#">Sale</a></div>
         </div>
     </nav>
 
@@ -397,7 +352,7 @@
         <!-- Filters Sidebar -->
         <aside class="filters-sidebar">
             <h3 class="filters-title">Filters</h3>
-            
+
             <div class="filter-group">
                 <h4 class="filter-group-title">Category</h4>
                 <div class="filter-options">
@@ -517,7 +472,7 @@
                     <h1 class="catalog-title">Menswear</h1>
                     <p class="catalog-info">1,247 items available</p>
                 </div>
-                
+
                 <div class="sort-options">
                     <span class="sort-label">Sort by:</span>
                     <select class="sort-select">
@@ -527,7 +482,7 @@
                         <option>Most Popular</option>
                         <option>Brand A-Z</option>
                     </select>
-                    
+
                     <div class="view-toggle">
                         <button class="view-btn active" data-view="grid">⊞</button>
                         <button class="view-btn" data-view="list">☰</button>
@@ -695,18 +650,18 @@
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // View toggle functionality
             const viewButtons = document.querySelectorAll('.view-btn');
             const productGrid = document.getElementById('productGrid');
-            
+
             viewButtons.forEach(btn => {
-                btn.addEventListener('click', function() {
+                btn.addEventListener('click', function () {
                     // Remove active class from all buttons
                     viewButtons.forEach(b => b.classList.remove('active'));
                     // Add active class to clicked button
                     this.classList.add('active');
-                    
+
                     const view = this.dataset.view;
                     if (view === 'list') {
                         productGrid.classList.add('list-view');
@@ -727,7 +682,7 @@
             // Filter functionality
             const filterCheckboxes = document.querySelectorAll('.filter-checkbox');
             filterCheckboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
+                checkbox.addEventListener('change', function () {
                     // Add filter logic here
                     console.log('Filter changed:', this.parentElement.textContent.trim());
                 });
@@ -735,7 +690,7 @@
 
             // Clear filters
             const clearFiltersBtn = document.querySelector('.clear-filters');
-            clearFiltersBtn.addEventListener('click', function() {
+            clearFiltersBtn.addEventListener('click', function () {
                 filterCheckboxes.forEach(checkbox => {
                     checkbox.checked = false;
                 });
@@ -746,14 +701,14 @@
 
             // Sort functionality
             const sortSelect = document.querySelector('.sort-select');
-            sortSelect.addEventListener('change', function() {
+            sortSelect.addEventListener('change', function () {
                 console.log('Sort changed to:', this.value);
                 // Add sorting logic here
             });
 
             // Search functionality
             const searchInput = document.getElementById('searchInput');
-            searchInput.addEventListener('input', function() {
+            searchInput.addEventListener('input', function () {
                 console.log('Search query:', this.value);
                 // Add search logic here
             });
@@ -761,7 +716,7 @@
             // Product card click
             const productCards = document.querySelectorAll('.product-card');
             productCards.forEach(card => {
-                card.addEventListener('click', function() {
+                card.addEventListener('click', function () {
                     // Navigate to product detail page
                     console.log('Navigate to product detail');
                 });
@@ -770,7 +725,7 @@
             // Pagination
             const paginationBtns = document.querySelectorAll('.pagination-btn');
             paginationBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
+                btn.addEventListener('click', function () {
                     if (!isNaN(this.textContent)) {
                         // Remove active from all
                         paginationBtns.forEach(b => b.classList.remove('active'));
@@ -782,4 +737,5 @@
         });
     </script>
 </body>
+
 </html>

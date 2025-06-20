@@ -8,7 +8,7 @@ $password=$_POST['password'];
 
 $hashed_password=password_hash($password,PASSWORD_DEFAULT);
 
-$sql="insert into users1 (FirstName,LastName,Email,Password) values(?,?,?,?)";
+$sql="insert into users (firstName,lastName,email,password) values(?,?,?,?)";
 
 $stmt=$conn->prepare($sql);
 

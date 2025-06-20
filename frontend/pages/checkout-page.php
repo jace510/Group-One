@@ -1,12 +1,17 @@
+<?php
+include '../../backend/auth/header.php';
+
+include '../modal.php';
+    ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout - Railed</title>
     <link rel="stylesheet" href="../index.css">
     <style>
-        
         /* Checkout Content */
         .checkout-container {
             max-width: 1200px;
@@ -232,85 +237,33 @@
             margin-top: 60px;
         }
 
-       
-            .checkout-container {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
 
-            .checkout-sidebar {
-                order: -1;
-                position: relative;
-                top: auto;
-            }
+        .checkout-container {
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
 
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-        
+        .checkout-sidebar {
+            order: -1;
+            position: relative;
+            top: auto;
+        }
+
+        .form-row {
+            grid-template-columns: 1fr;
+        }
     </style>
 </head>
+
 <body>
-    <?php include 'modal.php'; ?>
-    <!-- Header -->
-    <header class="header">
-        <div class="header-content">
-            <!-- Mobile left icons -->
-            <div class="mobile-icons">
-                <svg class="mobile-icon" viewBox="0 0 24 24">
-                    <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
-                </svg>
-                <svg class="mobile-icon" viewBox="0 0 24 24">
-                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-                </svg>
-            </div>
-            
-            <a href="#" class="logo">RAILED</a>
-            
-            <!-- Desktop search -->
-            <div class="search-container">
-                <input type="text" class="search-input" placeholder="Search for anything">
-            </div>
-            
-            <!-- Desktop navigation -->
-            <nav class="nav-links">
-                <a href="#" class="nav-link">SIGN IN</a>
-                <a href="#" class="nav-link">SIGN UP</a>
-                <a href="#" class="sell-btn">Sell</a>
-            </nav>
-            
-            <!-- Mobile right icons -->
-            <div class="mobile-icons">
-                <a href="#" class="nav-link" style="font-size: 12px; margin-right: 10px;">SIGN IN</a>
-                <a href="#" class="nav-link" style="font-size: 12px; margin-right: 10px;">SIGN UP</a>
-            </div>
-        </div>
-    </header>
 
     <!-- Main Navigation -->
     <nav class="main-nav">
         <div class="main-nav-content">
-            <div class="nav-category">
-                <a href="#">Designers</a>
-            </div>
-            <div class="nav-category">
-                <a href="#">Menswear</a>
-            </div>
-            <div class="nav-category">
-                <a href="#">Womenswear</a>
-            </div>
-            <div class="nav-category">
-                <a href="#">Sneakers</a>
-            </div>
-            <div class="nav-category">
-                <a href="#">Staff Picks</a>
-            </div>
-            <div class="nav-category">
-                <a href="#">Collections</a>
-            </div>
-            <div class="nav-category">
-                <a href="#">Editorial</a>
-            </div>
+            <div class="nav-category"><a href="#">Designers</a></div>
+            <div class="nav-category"><a href="#">Menswear</a></div>
+            <div class="nav-category"><a href="#">Womenswear</a></div>
+            <div class="nav-category"><a href="#">Sale</a></div>
         </div>
     </nav>
 
@@ -401,7 +354,8 @@
             <div class="checkout-section">
                 <h2 class="section-title">Order Notes (Optional)</h2>
                 <div class="form-group">
-                    <textarea class="form-input" rows="4" placeholder="Special delivery instructions or notes..."></textarea>
+                    <textarea class="form-input" rows="4"
+                        placeholder="Special delivery instructions or notes..."></textarea>
                 </div>
             </div>
         </div>
@@ -410,7 +364,7 @@
         <div class="checkout-sidebar">
             <div class="order-summary">
                 <h3>Order Summary</h3>
-                
+
                 <div class="order-item">
                     <div class="item-image">👕</div>
                     <div class="item-details">
@@ -507,15 +461,15 @@
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Form validation and interaction
             const inputs = document.querySelectorAll('.form-input, .form-select');
             inputs.forEach(input => {
-                input.addEventListener('focus', function() {
+                input.addEventListener('focus', function () {
                     this.style.borderColor = '#000';
                 });
-                
-                input.addEventListener('blur', function() {
+
+                input.addEventListener('blur', function () {
                     if (!this.value) {
                         this.style.borderColor = '#ddd';
                     }
@@ -524,11 +478,11 @@
 
             // Complete order button
             const completeOrderBtn = document.querySelector('.complete-order-btn');
-            completeOrderBtn.addEventListener('click', function() {
+            completeOrderBtn.addEventListener('click', function () {
                 // Add loading state
                 this.innerHTML = 'Processing...';
                 this.disabled = true;
-                
+
                 // Simulate processing
                 setTimeout(() => {
                     alert('Order completed successfully!');
@@ -539,11 +493,12 @@
 
             // Billing same as shipping checkbox
             const billingSameCheckbox = document.getElementById('billing-same');
-            billingSameCheckbox.addEventListener('change', function() {
+            billingSameCheckbox.addEventListener('change', function () {
                 // In a real implementation, this would copy shipping address to billing
                 console.log('Billing same as shipping:', this.checked);
             });
         });
     </script>
 </body>
+
 </html>

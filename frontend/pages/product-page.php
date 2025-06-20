@@ -1,14 +1,19 @@
+<?php
+include '../../backend/auth/header.php';
+
+include '../modal.php';
+    ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Supreme Box Logo Hoodie Black - Railed</title>
     <link rel="stylesheet" href="../index.css">
     <style>
-    
         /* Header - Same as base */
-       
+
         /* Breadcrumb */
         .breadcrumb {
             background: #f8f8f8;
@@ -384,7 +389,7 @@
 
         .related-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
         }
 
         .related-image {
@@ -473,7 +478,7 @@
                 background: #fff;
                 padding: 20px;
                 border-radius: 8px;
-                box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+                box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
             }
 
             .related-grid {
@@ -483,46 +488,24 @@
         }
     </style>
 </head>
+
 <body>
-    <?php include 'modal.php'; ?>
 
-    <!-- Header -->
-    <header class="header">
-        <div class="header-content">
-            <!-- Mobile left icons -->
-            <div class="mobile-icons">
-                <svg class="mobile-icon" viewBox="0 0 24 24">
-                    <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
-                </svg>
-                <svg class="mobile-icon" viewBox="0 0 24 24">
-                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-                </svg>
-            </div>
 
-            <a href="index.html" class="logo">RAILED</a>
-            
-            <div class="search-container">
-                <input type="text" class="search-input" placeholder="Search for anything" id="searchInput">
-            </div>
-            
-            <nav class="nav-links">
-                <a href="login.html" class="nav-link">SIGN IN</a>
-                <a href="login.html" class="nav-link">SIGN UP</a>
-                <a href="sell.html" class="sell-btn">Sell</a>
-            </nav>
-
-             <!-- Mobile right icons -->
-            <div class="mobile-icons">
-            <a href="#" class="nav-link" style="font-size: 12px; margin-right: 10px;">SIGN IN</a>
-            <a href="#" class="nav-link" style="font-size: 12px; margin-right: 10px;">SIGN UP</a>
+    <nav class="main-nav">
+        <div class="main-nav-content">
+            <div class="nav-category"><a href="#">Designers</a></div>
+            <div class="nav-category"><a href="#">Menswear</a></div>
+            <div class="nav-category"><a href="#">Womenswear</a></div>
+            <div class="nav-category"><a href="#">Sale</a></div>
         </div>
-        </div>
-    </header>
+    </nav>
 
     <!-- Breadcrumb -->
     <div class="breadcrumb">
         <div class="breadcrumb-content">
-            <a href="index.html">Home</a> / <a href="catalog.html">Menswear</a> / <a href="#">Hoodies & Sweatshirts</a> / Supreme Box Logo Hoodie Black
+            <a href="index.html">Home</a> / <a href="catalog.html">Menswear</a> / <a href="#">Hoodies & Sweatshirts</a>
+            / Supreme Box Logo Hoodie Black
         </div>
     </div>
 
@@ -592,7 +575,10 @@
             <div class="product-description">
                 <h3 class="description-title">Description</h3>
                 <p class="description-text">
-                    Iconic Supreme Box Logo Hoodie in classic black colorway. Features the legendary box logo embroidered on the chest. Made from premium heavyweight cotton fleece with a comfortable relaxed fit. This piece is brand new with original tags attached. A must-have for any Supreme collector or streetwear enthusiast.
+                    Iconic Supreme Box Logo Hoodie in classic black colorway. Features the legendary box logo
+                    embroidered on the chest. Made from premium heavyweight cotton fleece with a comfortable relaxed
+                    fit. This piece is brand new with original tags attached. A must-have for any Supreme collector or
+                    streetwear enthusiast.
                 </p>
             </div>
 
@@ -708,18 +694,18 @@
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Thumbnail image switching
             const thumbnails = document.querySelectorAll('.thumbnail');
             const mainImage = document.getElementById('mainImage');
-            
+
             thumbnails.forEach(thumb => {
-                thumb.addEventListener('click', function() {
+                thumb.addEventListener('click', function () {
                     // Remove active class from all thumbnails
                     thumbnails.forEach(t => t.classList.remove('active'));
                     // Add active class to clicked thumbnail
                     this.classList.add('active');
-                    
+
                     // Update main image
                     const imageData = this.dataset.image;
                     mainImage.innerHTML = `<div class="product-badge">NEW</div>${imageData}`;
@@ -729,7 +715,7 @@
             // Size selection
             const sizeOptions = document.querySelectorAll('.size-option:not(.unavailable)');
             sizeOptions.forEach(size => {
-                size.addEventListener('click', function() {
+                size.addEventListener('click', function () {
                     // Remove selected class from all sizes
                     sizeOptions.forEach(s => s.classList.remove('selected'));
                     // Add selected class to clicked size
@@ -739,7 +725,7 @@
 
             // Buy button functionality
             const buyBtn = document.getElementById('buyBtn');
-            buyBtn.addEventListener('click', function() {
+            buyBtn.addEventListener('click', function () {
                 const selectedSize = document.querySelector('.size-option.selected');
                 if (selectedSize) {
                     alert(`Added ${selectedSize.textContent} to cart!`);
@@ -751,8 +737,8 @@
             // Wishlist button functionality
             const wishlistBtn = document.getElementById('wishlistBtn');
             let isWishlisted = false;
-            
-            wishlistBtn.addEventListener('click', function() {
+
+            wishlistBtn.addEventListener('click', function () {
                 isWishlisted = !isWishlisted;
                 if (isWishlisted) {
                     this.textContent = 'Remove from Wishlist ♥';
@@ -770,24 +756,25 @@
             // Related product click
             const relatedCards = document.querySelectorAll('.related-card');
             relatedCards.forEach(card => {
-                card.addEventListener('click', function() {
+                card.addEventListener('click', function () {
                     console.log('Navigate to related product');
                     // Add navigation logic here
                 });
             });
 
             // Main image zoom effect
-            mainImage.addEventListener('click', function() {
+            mainImage.addEventListener('click', function () {
                 this.style.transform = this.style.transform === 'scale(1.5)' ? 'scale(1)' : 'scale(1.5)';
             });
 
             // Search functionality
             const searchInput = document.getElementById('searchInput');
-            searchInput.addEventListener('input', function() {
+            searchInput.addEventListener('input', function () {
                 console.log('Search query:', this.value);
                 // Add search logic here
             });
         });
     </script>
 </body>
+
 </html>

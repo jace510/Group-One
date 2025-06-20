@@ -1,12 +1,17 @@
+<?php
+include '../../backend/auth/header.php';
+
+include '../modal.php';
+    ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>List Your Item - Railed</title>
     <link rel="stylesheet" href="../index.css">
     <style>
-       
         /* Listing Page Specific Styles */
         .listing-hero {
             background: linear-gradient(135deg, #000 0%, #333 100%);
@@ -49,7 +54,7 @@
             background: #fff;
             padding: 60px;
             border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             border: 1px solid #e5e5e5;
         }
 
@@ -116,7 +121,7 @@
         .form-textarea:focus {
             outline: none;
             border-color: #000;
-            box-shadow: 0 0 0 3px rgba(0,0,0,0.1);
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
         }
 
         .form-textarea {
@@ -230,7 +235,7 @@
             position: absolute;
             top: 8px;
             right: 8px;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0, 0, 0, 0.7);
             color: #fff;
             border: none;
             border-radius: 50%;
@@ -301,13 +306,13 @@
             letter-spacing: 1px;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         .submit-button:hover {
             background: #333;
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
 
         .submit-button:disabled {
@@ -317,35 +322,35 @@
             cursor: not-allowed;
         }
 
-            .listing-hero h1 {
-                font-size: 28px;
-            }
+        .listing-hero h1 {
+            font-size: 28px;
+        }
 
-            .listing-hero p {
-                font-size: 16px;
-            }
+        .listing-hero p {
+            font-size: 16px;
+        }
 
-            .listing-form {
-                padding: 40px 30px;
-            }
+        .listing-form {
+            padding: 40px 30px;
+        }
 
-            .form-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
+        .form-grid {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
 
-            .form-section-title {
-                font-size: 20px;
-            }
+        .form-section-title {
+            font-size: 20px;
+        }
 
-            .condition-grid {
-                grid-template-columns: 1fr;
-            }
+        .condition-grid {
+            grid-template-columns: 1fr;
+        }
 
-            .photo-upload-area {
-                padding: 40px 20px;
-            }
-        
+        .photo-upload-area {
+            padding: 40px 20px;
+        }
+
 
         /* Hidden file input */
         .hidden-file-input {
@@ -370,72 +375,27 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
     </style>
 </head>
+
 <body>
-    <?php include 'modal.php'; ?>
-    <!-- Header - Exact same as sell page -->
-    <header class="header">
-        <div class="header-content">
-            <!-- Mobile left icons -->
-            <div class="mobile-icons">
-                <svg class="mobile-icon" viewBox="0 0 24 24">
-                    <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
-                </svg>
-                <svg class="mobile-icon" viewBox="0 0 24 24">
-                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-                </svg>
-            </div>
-            
-            <a href="#" class="logo">RAILED</a>
-            
-            <!-- Desktop search -->
-            <div class="search-container">
-                <input type="text" class="search-input" placeholder="Search for anything">
-            </div>
-            
-            <!-- Desktop navigation -->
-            <nav class="nav-links">
-                <a href="#" class="nav-link">SIGN IN</a>
-                <a href="#" class="nav-link">SIGN UP</a>
-                <a href="#" class="sell-btn">Sell</a>
-            </nav>
-            
-            <!-- Mobile right icons -->
-            <div class="mobile-icons">
-                <a href="#" class="nav-link" style="font-size: 12px; margin-right: 10px;">SIGN IN</a>
-                <a href="#" class="nav-link" style="font-size: 12px; margin-right: 10px;">SIGN UP</a>
-            </div>
-        </div>
-    </header>
+
 
     <!-- Main Navigation - Exact same as sell page -->
     <nav class="main-nav">
         <div class="main-nav-content">
-            <div class="nav-category">
-                <a href="#">Designers</a>
-            </div>
-            <div class="nav-category">
-                <a href="#">Menswear</a>
-            </div>
-            <div class="nav-category">
-                <a href="#">Womenswear</a>
-            </div>
-            <div class="nav-category">
-                <a href="#">Sneakers</a>
-            </div>
-            <div class="nav-category">
-                <a href="#">Staff Picks</a>
-            </div>
-            <div class="nav-category">
-                <a href="#">Collections</a>
-            </div>
-            <div class="nav-category">
-                <a href="#">Editorial</a>
-            </div>
+            <div class="nav-category"><a href="#">Designers</a></div>
+            <div class="nav-category"><a href="#">Menswear</a></div>
+            <div class="nav-category"><a href="#">Womenswear</a></div>
+            <div class="nav-category"><a href="#">Sale</a></div>
         </div>
     </nav>
 
@@ -461,7 +421,8 @@
                         <div class="upload-icon">📷</div>
                         <div class="upload-text">Upload Photos</div>
                         <div class="upload-subtext">Drag and drop your photos here, or click to browse</div>
-                        <button type="button" class="upload-button" onclick="document.getElementById('photoInput').click()">
+                        <button type="button" class="upload-button"
+                            onclick="document.getElementById('photoInput').click()">
                             Choose Photos
                         </button>
                         <input type="file" id="photoInput" class="hidden-file-input" multiple accept="image/*">
@@ -502,11 +463,14 @@
                         </div>
                         <div class="form-group full-width">
                             <label class="form-label">Title</label>
-                            <input type="text" class="form-input" placeholder="Descriptive title for your item" required>
+                            <input type="text" class="form-input" placeholder="Descriptive title for your item"
+                                required>
                         </div>
                         <div class="form-group full-width">
                             <label class="form-label">Description</label>
-                            <textarea class="form-textarea" placeholder="Detailed description including fit, materials, condition notes, etc." required></textarea>
+                            <textarea class="form-textarea"
+                                placeholder="Detailed description including fit, materials, condition notes, etc."
+                                required></textarea>
                         </div>
                     </div>
                 </div>
@@ -555,18 +519,21 @@
                         <div class="form-group">
                             <label class="form-label">Asking Price</label>
                             <div class="price-input-group">
-                                <input type="number" class="form-input price-input" placeholder="0.00" step="0.01" min="1" required>
+                                <input type="number" class="form-input price-input" placeholder="0.00" step="0.01"
+                                    min="1" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Original Retail Price (Optional)</label>
                             <div class="price-input-group">
-                                <input type="number" class="form-input price-input" placeholder="0.00" step="0.01" min="1">
+                                <input type="number" class="form-input price-input" placeholder="0.00" step="0.01"
+                                    min="1">
                             </div>
                         </div>
                         <div class="form-group full-width">
                             <label class="form-label">Additional Notes (Optional)</label>
-                            <textarea class="form-textarea" rows="3" placeholder="Any additional information about pricing, shipping, or the item"></textarea>
+                            <textarea class="form-textarea" rows="3"
+                                placeholder="Any additional information about pricing, shipping, or the item"></textarea>
                         </div>
                     </div>
                 </div>
@@ -632,7 +599,7 @@
         let selectedPhotos = [];
         let selectedCondition = null;
 
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Photo upload functionality
             const photoInput = document.getElementById('photoInput');
             const photoUploadArea = document.getElementById('photoUploadArea');
@@ -650,7 +617,7 @@
             // Condition selection
             const conditionOptions = document.querySelectorAll('.condition-option');
             conditionOptions.forEach(option => {
-                option.addEventListener('click', function() {
+                option.addEventListener('click', function () {
                     // Remove selected class from all options
                     conditionOptions.forEach(opt => opt.classList.remove('selected'));
                     // Add selected class to clicked option
@@ -665,11 +632,11 @@
             // Search input focus effect
             const searchInput = document.querySelector('.search-input');
             if (searchInput) {
-                searchInput.addEventListener('focus', function() {
+                searchInput.addEventListener('focus', function () {
                     this.parentElement.style.transform = 'scale(1.02)';
                 });
-                
-                searchInput.addEventListener('blur', function() {
+
+                searchInput.addEventListener('blur', function () {
                     this.parentElement.style.transform = 'scale(1)';
                 });
             }
@@ -703,11 +670,11 @@
 
         function processFiles(files) {
             const imageFiles = files.filter(file => file.type.startsWith('image/'));
-            
+
             imageFiles.forEach(file => {
                 if (selectedPhotos.length < 10) { // Limit to 10 photos
                     const reader = new FileReader();
-                    reader.onload = function(e) {
+                    reader.onload = function (e) {
                         const photoData = {
                             file: file,
                             url: e.target.result,
@@ -723,20 +690,20 @@
 
         function displayPhotoPreview(photoData) {
             const photoPreviewGrid = document.getElementById('photoPreviewGrid');
-            
+
             const photoPreview = document.createElement('div');
             photoPreview.className = 'photo-preview';
             photoPreview.innerHTML = `
                 <img src="${photoData.url}" alt="Preview">
                 <button type="button" class="photo-remove" onclick="removePhoto('${photoData.id}')">×</button>
             `;
-            
+
             photoPreviewGrid.appendChild(photoPreview);
         }
 
         function removePhoto(photoId) {
             selectedPhotos = selectedPhotos.filter(photo => photo.id != photoId);
-            
+
             // Remove preview element
             const photoPreviewGrid = document.getElementById('photoPreviewGrid');
             const photoElements = photoPreviewGrid.children;
@@ -751,13 +718,13 @@
 
         function handleFormSubmit(e) {
             e.preventDefault();
-            
+
             // Validate required fields
             if (selectedPhotos.length === 0) {
                 alert('Please upload at least one photo of your item.');
                 return;
             }
-            
+
             if (!selectedCondition) {
                 alert('Please select the condition of your item.');
                 return;
@@ -772,14 +739,14 @@
             // Simulate form processing
             setTimeout(() => {
                 alert('Success! Your item has been listed for sale. You will receive a confirmation email shortly.');
-                
+
                 // Reset form
                 document.getElementById('listingForm').reset();
                 selectedPhotos = [];
                 selectedCondition = null;
                 document.getElementById('photoPreviewGrid').innerHTML = '';
                 document.querySelectorAll('.condition-option').forEach(opt => opt.classList.remove('selected'));
-                
+
                 // Reset button
                 submitButton.textContent = originalText;
                 submitButton.disabled = false;
@@ -790,7 +757,7 @@
         function validateForm() {
             const requiredFields = document.querySelectorAll('[required]');
             let isValid = true;
-            
+
             requiredFields.forEach(field => {
                 if (!field.value.trim()) {
                     field.style.borderColor = '#ff4444';
@@ -799,12 +766,12 @@
                     field.style.borderColor = '#ddd';
                 }
             });
-            
+
             return isValid && selectedPhotos.length > 0 && selectedCondition;
         }
 
         // Real-time form validation
-        document.addEventListener('input', function(e) {
+        document.addEventListener('input', function (e) {
             if (e.target.matches('.form-input, .form-select, .form-textarea')) {
                 if (e.target.value.trim()) {
                     e.target.style.borderColor = '#ddd';
@@ -813,7 +780,7 @@
         });
 
         // Auto-resize textarea
-        document.addEventListener('input', function(e) {
+        document.addEventListener('input', function (e) {
             if (e.target.matches('.form-textarea')) {
                 e.target.style.height = 'auto';
                 e.target.style.height = e.target.scrollHeight + 'px';
@@ -821,12 +788,12 @@
         });
 
         // Price formatting
-        document.addEventListener('input', function(e) {
+        document.addEventListener('input', function (e) {
             if (e.target.matches('.price-input')) {
                 let value = e.target.value;
                 if (value && !isNaN(value)) {
                     // Ensure two decimal places on blur
-                    e.target.addEventListener('blur', function() {
+                    e.target.addEventListener('blur', function () {
                         if (this.value) {
                             this.value = parseFloat(this.value).toFixed(2);
                         }
@@ -836,8 +803,8 @@
         });
 
         // Enhanced upload area interactions
-        document.getElementById('photoUploadArea').addEventListener('click', function(e) {
-            if (e.target === this || e.target.classList.contains('upload-icon') || 
+        document.getElementById('photoUploadArea').addEventListener('click', function (e) {
+            if (e.target === this || e.target.classList.contains('upload-icon') ||
                 e.target.classList.contains('upload-text') || e.target.classList.contains('upload-subtext')) {
                 document.getElementById('photoInput').click();
             }
@@ -859,7 +826,7 @@
         }, observerOptions);
 
         // Observe form sections for animation
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const formSections = document.querySelectorAll('.form-section');
             formSections.forEach(section => {
                 section.style.opacity = '0';
@@ -870,4 +837,5 @@
         });
     </script>
 </body>
+
 </html>

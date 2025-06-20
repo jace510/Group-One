@@ -1,12 +1,16 @@
+<?php
+include '../../backend/auth/header.php';
+include '../modal.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account Settings - Railed</title>
     <link rel="stylesheet" href="../index.css">
     <style>
-
         /* Account Settings Main Content */
         .account-container {
             max-width: 1200px;
@@ -35,7 +39,7 @@
 
         .sidebar-nav {
             list-style: none;
-             margin: 0;
+            margin: 0;
             padding: 0;
             display: flex;
             flex-direction: column;
@@ -98,7 +102,7 @@
         }
 
         .settings-section:hover {
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
         }
 
         .section-title {
@@ -146,7 +150,7 @@
         .form-input:focus {
             outline: none;
             border-color: #000;
-            box-shadow: 0 0 0 3px rgba(0,0,0,0.1);
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
         }
 
         .form-select {
@@ -361,117 +365,66 @@
             margin-top: 80px;
         }
 
-            @media (max-width: 768px) {
-                .account-container {
-                    grid-template-columns: 1fr;
-                    gap: 30px;
-                    padding: 20px;
-                }
-
-                .account-sidebar {
-                    position: static;
-                    padding: 25px 20px;
-                }
-
-                .sidebar-nav {
-                    flex-direction: row;
-                    flex-wrap: wrap;
-                    gap: 10px;
-                }
-
-                .sidebar-nav li {
-                    margin-bottom: 0;
-                    flex: 1;
-                    min-width: calc(50% - 5px);
-                }
-
-                .sidebar-nav a {
-                    text-align: center;
-                    font-size: 12px;
-                    padding: 10px 8px;
-                    border: #333 solid 1px;
-                }
-                
-
-
-                .settings-section {
-                    padding: 25px 20px;
-                }
-
-                .form-row {
-                    grid-template-columns: 1fr;
-                    gap: 15px;
-                }
-
-                .profile-image-container {
-                    flex-direction: column;
-                    text-align: center;
-                }
+        @media (max-width: 768px) {
+            .account-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 20px;
             }
-    
+
+            .account-sidebar {
+                position: static;
+                padding: 25px 20px;
+            }
+
+            .sidebar-nav {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .sidebar-nav li {
+                margin-bottom: 0;
+                flex: 1;
+                min-width: calc(50% - 5px);
+            }
+
+            .sidebar-nav a {
+                text-align: center;
+                font-size: 12px;
+                padding: 10px 8px;
+                border: #333 solid 1px;
+            }
+
+
+
+            .settings-section {
+                padding: 25px 20px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .profile-image-container {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
     </style>
 </head>
-<body>
-    <?php include 'modal.php'; ?>
-    <!-- Header -->
-    <header class="header">
-        <div class="header-content">
-            <!-- Mobile left icons -->
-            <div class="mobile-icons">
-                <svg class="mobile-icon" viewBox="0 0 24 24">
-                    <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
-                </svg>
-                <svg class="mobile-icon" viewBox="0 0 24 24">
-                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-                </svg>
-            </div>
-            
-            <a href="#" class="logo">RAILED</a>
-            
-            <!-- Desktop search -->
-            <div class="search-container">
-                <input type="text" class="search-input" placeholder="Search for anything">
-            </div>
-            
-            <!-- Desktop navigation -->
-            <nav class="nav-links">
-                <a href="#" class="nav-link">ACCOUNT</a>
-                <a href="#" class="nav-link">ORDERS</a>
-                <a href="#" class="sell-btn">Sell</a>
-            </nav>
-            
-            <!-- Mobile right icons -->
-            <div class="mobile-icons">
-                <a href="#" class="nav-link" style="font-size: 12px; margin-right: 10px;">ACCOUNT</a>
-                <a href="#" class="nav-link" style="font-size: 12px; margin-right: 10px;">ORDERS</a>
-            </div>
-        </div>
-    </header>
 
+<body>
+
+    <!-- Header -->
     <!-- Main Navigation -->
     <nav class="main-nav">
         <div class="main-nav-content">
-            <div class="nav-category">
-                <a href="#">Designers</a>
-            </div>
-            <div class="nav-category">
-                <a href="#">Menswear</a>
-            </div>
-            <div class="nav-category">
-                <a href="#">Womenswear</a>
-            </div>
-            <div class="nav-category">
-                <a href="#">Sneakers</a>
-            </div>
-            <div class="nav-category">
-                <a href="#">Staff Picks</a>
-            </div>
-            <div class="nav-category">
-                <a href="#">Collections</a>
-            </div>
-            <div class="nav-category">
-                <a href="#">Editorial</a>
-            </div>
+            <div class="nav-category"><a href="#">Designers</a></div>
+            <div class="nav-category"><a href="#">Menswear</a></div>
+            <div class="nav-category"><a href="#">Womenswear</a></div>
+            <div class="nav-category"><a href="#">Sale</a></div>
         </div>
     </nav>
 
@@ -506,7 +459,7 @@
                     <span class="section-icon">👤</span>
                     Profile Information
                 </h2>
-                
+
                 <div class="profile-image-container">
                     <div class="profile-image">📷</div>
                     <div>
@@ -526,28 +479,31 @@
                             <input type="text" class="form-input" value="Johnson" placeholder="Enter your last name">
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <label class="form-label">Email Address</label>
-                        <input type="email" class="form-input" value="alex.johnson@email.com" placeholder="Enter your email">
+                        <input type="email" class="form-input" value="alex.johnson@email.com"
+                            placeholder="Enter your email">
                     </div>
-                    
+
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">Phone Number</label>
-                            <input type="tel" class="form-input" value="+1 (555) 123-4567" placeholder="Enter your phone">
+                            <input type="tel" class="form-input" value="+1 (555) 123-4567"
+                                placeholder="Enter your phone">
                         </div>
                         <div class="form-group">
                             <label class="form-label">Date of Birth</label>
                             <input type="date" class="form-input" value="1990-05-15">
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <label class="form-label">Bio</label>
-                        <textarea class="form-textarea" placeholder="Tell us about yourself...">Fashion enthusiast and collector with a passion for vintage designer pieces.</textarea>
+                        <textarea class="form-textarea"
+                            placeholder="Tell us about yourself...">Fashion enthusiast and collector with a passion for vintage designer pieces.</textarea>
                     </div>
-                    
+
                     <button type="submit" class="btn-primary">Save Changes</button>
                 </form>
             </section>
@@ -558,13 +514,13 @@
                     <span class="section-icon">🔒</span>
                     Security & Privacy
                 </h2>
-                
+
                 <form>
                     <div class="form-group">
                         <label class="form-label">Current Password</label>
                         <input type="password" class="form-input" placeholder="Enter current password">
                     </div>
-                    
+
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">New Password</label>
@@ -575,17 +531,17 @@
                             <input type="password" class="form-input" placeholder="Confirm new password">
                         </div>
                     </div>
-                    
+
                     <div class="form-checkbox">
                         <input type="checkbox" id="two-factor" checked>
                         <label for="two-factor">Enable two-factor authentication</label>
                     </div>
-                    
+
                     <div class="form-checkbox">
                         <input type="checkbox" id="login-alerts">
                         <label for="login-alerts">Send email alerts for new logins</label>
                     </div>
-                    
+
                     <button type="submit" class="btn-primary">Update Security</button>
                 </form>
             </section>
@@ -596,42 +552,42 @@
                     <span class="section-icon">🔔</span>
                     Notification Preferences
                 </h2>
-                
+
                 <form>
                     <h3 style="font-size: 16px; margin-bottom: 20px; color: #000;">Email Notifications</h3>
-                    
+
                     <div class="form-checkbox">
                         <input type="checkbox" id="order-updates" checked>
                         <label for="order-updates">Order updates and shipping notifications</label>
                     </div>
-                    
+
                     <div class="form-checkbox">
                         <input type="checkbox" id="new-arrivals" checked>
                         <label for="new-arrivals">New arrivals from followed designers</label>
                     </div>
-                    
+
                     <div class="form-checkbox">
                         <input type="checkbox" id="price-drops">
                         <label for="price-drops">Price drops on saved items</label>
                     </div>
-                    
+
                     <div class="form-checkbox">
                         <input type="checkbox" id="promotions">
                         <label for="promotions">Promotions and special offers</label>
                     </div>
-                    
+
                     <h3 style="font-size: 16px; margin: 30px 0 20px 0; color: #000;">Push Notifications</h3>
-                    
+
                     <div class="form-checkbox">
                         <input type="checkbox" id="push-orders" checked>
                         <label for="push-orders">Order status updates</label>
                     </div>
-                    
+
                     <div class="form-checkbox">
                         <input type="checkbox" id="push-messages">
                         <label for="push-messages">Messages from buyers/sellers</label>
                     </div>
-                    
+
                     <button type="submit" class="btn-primary">Save Preferences</button>
                 </form>
             </section>
@@ -642,7 +598,7 @@
                     <span class="section-icon">📍</span>
                     Shipping Addresses
                 </h2>
-                
+
                 <div class="address-grid">
                     <div class="address-card default">
                         <div class="address-header">
@@ -650,23 +606,23 @@
                             <span class="default-badge">Default</span>
                         </div>
                         <p>Alex Johnson<br>
-                        123 Fashion Street<br>
-                        New York, NY 10001<br>
-                        United States</p>
+                            123 Fashion Street<br>
+                            New York, NY 10001<br>
+                            United States</p>
                         <div class="address-actions">
                             <button class="btn-small">Edit</button>
                             <button class="btn-small">Remove</button>
                         </div>
                     </div>
-                    
+
                     <div class="address-card">
                         <div class="address-header">
                             <span class="address-type">Work</span>
                         </div>
                         <p>Alex Johnson<br>
-                        456 Business Ave<br>
-                        New York, NY 10002<br>
-                        United States</p>
+                            456 Business Ave<br>
+                            New York, NY 10002<br>
+                            United States</p>
                         <div class="address-actions">
                             <button class="btn-small">Set Default</button>
                             <button class="btn-small">Edit</button>
@@ -674,7 +630,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <button class="btn-secondary">Add New Address</button>
             </section>
 
@@ -684,7 +640,7 @@
                     <span class="section-icon">💳</span>
                     Payment Methods
                 </h2>
-                
+
                 <div class="address-grid">
                     <div class="address-card default">
                         <div class="address-header">
@@ -692,21 +648,21 @@
                             <span class="default-badge">Default</span>
                         </div>
                         <p>Visa ending in 4242<br>
-                        Expires 12/25<br>
-                        Alex Johnson</p>
+                            Expires 12/25<br>
+                            Alex Johnson</p>
                         <div class="address-actions">
                             <button class="btn-small">Edit</button>
                             <button class="btn-small">Remove</button>
                         </div>
                     </div>
-                    
+
                     <div class="address-card">
                         <div class="address-header">
                             <span class="address-type">•••• •••• •••• 8888</span>
                         </div>
                         <p>Mastercard ending in 8888<br>
-                        Expires 08/26<br>
-                        Alex Johnson</p>
+                            Expires 08/26<br>
+                            Alex Johnson</p>
                         <div class="address-actions">
                             <button class="btn-small">Set Default</button>
                             <button class="btn-small">Edit</button>
@@ -714,7 +670,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <button class="btn-secondary">Add Payment Method</button>
             </section>
 
@@ -724,18 +680,19 @@
                     <span class="section-icon">🏪</span>
                     Seller Settings
                 </h2>
-                
+
                 <form>
                     <div class="form-group">
                         <label class="form-label">Store Name</label>
                         <input type="text" class="form-input" value="Alex's Closet" placeholder="Enter your store name">
                     </div>
-                    
+
                     <div class="form-group">
                         <label class="form-label">Store Description</label>
-                        <textarea class="form-textarea" placeholder="Describe your store...">Curated collection of premium fashion pieces. All items authenticated and in excellent condition.</textarea>
+                        <textarea class="form-textarea"
+                            placeholder="Describe your store...">Curated collection of premium fashion pieces. All items authenticated and in excellent condition.</textarea>
                     </div>
-                    
+
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">Processing Time</label>
@@ -754,12 +711,12 @@
                             </select>
                         </div>
                     </div>
-                    
+
                     <div class="form-checkbox">
                         <input type="checkbox" id="vacation-mode">
                         <label for="vacation-mode">Enable vacation mode (hide listings)</label>
                     </div>
-                    
+
                     <button type="submit" class="btn-primary">Save Seller Settings</button>
                 </form>
             </section>
@@ -770,7 +727,7 @@
                     <span class="section-icon">⚙️</span>
                     Account Preferences
                 </h2>
-                
+
                 <form>
                     <div class="form-row">
                         <div class="form-group">
@@ -793,7 +750,7 @@
                             </select>
                         </div>
                     </div>
-                    
+
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">Size Units</label>
@@ -813,22 +770,22 @@
                             </select>
                         </div>
                     </div>
-                    
+
                     <div class="form-checkbox">
                         <input type="checkbox" id="dark-mode">
                         <label for="dark-mode">Enable dark mode</label>
                     </div>
-                    
+
                     <div class="form-checkbox">
                         <input type="checkbox" id="auto-save" checked>
                         <label for="auto-save">Auto-save drafts</label>
                     </div>
-                    
+
                     <div class="form-checkbox">
                         <input type="checkbox" id="analytics">
                         <label for="analytics">Allow analytics and performance tracking</label>
                     </div>
-                    
+
                     <button type="submit" class="btn-primary">Save Preferences</button>
                 </form>
             </section>
@@ -839,22 +796,24 @@
                     <span class="section-icon">⚠️</span>
                     Danger Zone
                 </h2>
-                
-                <div style="background: #fff5f5; padding: 20px; border-radius: 8px; border: 1px solid #fecaca; margin-bottom: 25px;">
+
+                <div
+                    style="background: #fff5f5; padding: 20px; border-radius: 8px; border: 1px solid #fecaca; margin-bottom: 25px;">
                     <h3 style="font-size: 16px; color: #dc3545; margin-bottom: 10px;">Delete Account</h3>
                     <p style="font-size: 14px; color: #666; margin-bottom: 15px;">
-                        Once you delete your account, there is no going back. This will permanently delete your profile, 
+                        Once you delete your account, there is no going back. This will permanently delete your profile,
                         listings, purchase history, and remove all associated data.
                     </p>
                     <button class="btn-danger">Delete My Account</button>
                 </div>
-                
+
                 <div style="background: #fff5f5; padding: 20px; border-radius: 8px; border: 1px solid #fecaca;">
                     <h3 style="font-size: 16px; color: #dc3545; margin-bottom: 10px;">Deactivate Account</h3>
                     <p style="font-size: 14px; color: #666; margin-bottom: 15px;">
                         Temporarily deactivate your account. You can reactivate it anytime by logging back in.
                     </p>
-                    <button class="btn-secondary" style="border-color: #dc3545; color: #dc3545;">Deactivate Account</button>
+                    <button class="btn-secondary" style="border-color: #dc3545; color: #dc3545;">Deactivate
+                        Account</button>
                 </div>
             </section>
         </main>
@@ -906,14 +865,14 @@
     </footer>
     <script>
         // Profile image upload functionality
-        document.querySelector('.upload-btn').addEventListener('click', function() {
+        document.querySelector('.upload-btn').addEventListener('click', function () {
             const input = document.createElement('input');
             input.type = 'file';
             input.accept = 'image/jpeg,image/png';
-            input.onchange = function(e) {
+            input.onchange = function (e) {
                 if (e.target.files[0]) {
                     const reader = new FileReader();
-                    reader.onload = function(e) {
+                    reader.onload = function (e) {
                         document.querySelector('.profile-image').innerHTML = `<img src="${e.target.result}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" alt="Profile">`;
                     };
                     reader.readAsDataURL(e.target.files[0]);
@@ -924,13 +883,13 @@
 
         // Form validation and submission
         document.querySelectorAll('form').forEach(form => {
-            form.addEventListener('submit', function(e) {
+            form.addEventListener('submit', function (e) {
                 e.preventDefault();
-                
+
                 // Simple validation
                 const requiredInputs = this.querySelectorAll('input[required], .form-input');
                 let isValid = true;
-                
+
                 requiredInputs.forEach(input => {
                     if (input.type !== 'checkbox' && input.value.trim() === '') {
                         input.style.borderColor = '#dc3545';
@@ -939,14 +898,14 @@
                         input.style.borderColor = '#ddd';
                     }
                 });
-                
+
                 if (isValid) {
                     // Show success message
                     const button = this.querySelector('button[type="submit"]');
                     const originalText = button.textContent;
                     button.textContent = 'Saved!';
                     button.style.background = '#28a745';
-                    
+
                     setTimeout(() => {
                         button.textContent = originalText;
                         button.style.background = '';
@@ -958,19 +917,19 @@
         // Set default address/payment method
         document.querySelectorAll('.btn-small').forEach(btn => {
             if (btn.textContent === 'Set Default') {
-                btn.addEventListener('click', function() {
+                btn.addEventListener('click', function () {
                     // Remove default from all cards
                     document.querySelectorAll('.address-card, .payment-card').forEach(card => {
                         card.classList.remove('default');
                         const badge = card.querySelector('.default-badge');
                         if (badge) badge.remove();
                     });
-                    
+
                     // Add default to clicked card
                     const card = this.closest('.address-card');
                     card.classList.add('default');
                     card.querySelector('.address-header').innerHTML += '<span class="default-badge">Default</span>';
-                    
+
                     // Update button text
                     this.textContent = 'Default';
                     this.disabled = true;
@@ -979,25 +938,25 @@
         });
 
         // Delete/Deactivate account confirmations
-        document.querySelector('.btn-danger').addEventListener('click', function() {
+        document.querySelector('.btn-danger').addEventListener('click', function () {
             if (confirm('Are you absolutely sure you want to delete your account? This action cannot be undone.')) {
                 alert('Account deletion process initiated. You will receive a confirmation email.');
             }
         });
 
-        document.querySelector('.btn-secondary[style*="color: #dc3545"]').addEventListener('click', function() {
+        document.querySelector('.btn-secondary[style*="color: #dc3545"]').addEventListener('click', function () {
             if (confirm('Are you sure you want to deactivate your account?')) {
                 alert('Account has been deactivated. You can reactivate by logging in again.');
             }
         });
 
         // Dark mode toggle functionality
-        document.getElementById('dark-mode').addEventListener('change', function() {
+        document.getElementById('dark-mode').addEventListener('change', function () {
             if (this.checked) {
                 document.body.style.background = '#1a1a1a';
                 document.body.style.color = '#fff';
             } else {
-                document.body.style.background = '#fff';  
+                document.body.style.background = '#fff';
                 document.body.style.color = '#333';
             }
         });
@@ -1005,7 +964,7 @@
         // Auto-save functionality for form inputs
         document.querySelectorAll('.form-input, .form-textarea').forEach(input => {
             let timeout;
-            input.addEventListener('input', function() {
+            input.addEventListener('input', function () {
                 clearTimeout(timeout);
                 if (document.getElementById('auto-save').checked) {
                     timeout = setTimeout(() => {
@@ -1017,4 +976,5 @@
         });
     </script>
 </body>
+
 </html>
