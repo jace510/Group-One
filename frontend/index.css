@@ -399,6 +399,9 @@ body {
   width: 90%;
   border-radius: 8px;
   position: relative;
+  max-width: 400px;
+  max-height: 90vh; /* 💡 Limit the height */
+  overflow-y: auto;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
   /* Add a transition for a subtle pop effect */
   transform: scale(0.95);
@@ -549,6 +552,10 @@ body {
     justify-content: space-between;
     padding: 15px 20px;
     height: 60px;
+  }
+
+  .popup-form-section {
+    padding: 30px 20px;
   }
 
   .logo {
