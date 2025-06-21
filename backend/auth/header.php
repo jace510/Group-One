@@ -33,8 +33,8 @@ if (session_status() === PHP_SESSION_NONE) {
                 <a href="/Group-One/backend/auth/logout.php" class="nav-link">SIGN OUT</a>
                 <a href="/Group-One/frontend/pages/start-selling.php" class="sell-btn">SELL</a>
             <?php else: ?>
-                <a href="#" class="nav-link" onclick="openModal('loginModal')">Login</a>
-                <a href="#" class="nav-link" onclick="openModal('registerModal')">Register</a>
+                <a href="#" class="nav-link" onclick="openModal('loginModal')">SIGN IN</a>
+                <a href="#" class="nav-link" onclick="openModal('registerModal')">SIGN UP</a>
                 <a href="/Group-One/frontend/pages/start-selling.php" class="sell-btn">SELL</a>
 
             <?php endif; ?>
