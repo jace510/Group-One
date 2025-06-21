@@ -3,11 +3,15 @@ session_start(); // Start session for login
 
 require 'connection.php';
 
-$email = $_POST['email'];
+$email = trim($_POST['email']);
 $password = $_POST['password'];
 
+if (empty($email) || empty($password)) {
+    die("Please enter both email and password.");
+}
+
 // Get user by email
-$sql = "SELECT * FROM users WHERE Email = ?";
+$sql = "SELECT id, username, password FROM users WHERE email = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $email);
 $stmt->execute();
@@ -21,10 +25,10 @@ if ($result->num_rows === 1) {
     if (password_verify($password, $user['Password'])) {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['user_name'] = $user['FirstName'];
-
+        header("Location: ../../frontend/home.php");
         echo "Login successful! Welcome, " . $user['FirstName'] . ".";
-        // You can redirect to dashboard e.g echo header("location: browse.html"); or whichever file comes next, I've left it due to the file structure tunatumia
-        // header("Location: dashboard.php");
+        exit();
+            
     } else {
         echo " Incorrect password.";
     }
