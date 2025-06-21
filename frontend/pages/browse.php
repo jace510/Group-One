@@ -649,6 +649,9 @@ include '../modal.php';
         </div>
     </footer>
 
+    <?php include '../modal.php' ?>
+    <script src="../main.js"></script>
+    
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // View toggle functionality

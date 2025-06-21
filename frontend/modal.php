@@ -9,7 +9,9 @@
       <p class="slogan">Please enter your details to log in.</p>
 
       <!-- Corrected: Using a relative path for the form action -->
+      <?php $redirectTo = isset($_GET['redirect']) ? $_GET['redirect'] : 'home.php'; ?>
       <form action="../backend/auth/login.php" method="post">
+        <input type="hidden" name="redirect" value="<?php echo htmlspecialchars($redirectTo); ?>">
         <div class="form-row">
           <label for="login-email">Email:</label>
           <input type="email" id="login-email" name="email" class="custom-input" required />
@@ -80,28 +82,3 @@
     </div>
   </div>
 </div>
-
-<!-- <script>
-  window.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.modal-overlay').forEach(modal => {
-      modal.classList.remove('active');
-      modal.style.display = 'none';
-    });
-    document.body.style.overflow = 'auto';
-  });
-  function openModal(modalId) {
-    const modal = document.getElementById(modalId);
-    if (modal) {
-      modal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-  }
-
-  function closeModal(modalId) {
-    const modal = document.getElementById(modalId);
-    if (modal) {
-      modal.classList.remove('active');
-      document.body.style.overflow = 'auto';
-    }
-  }
-</script> -->

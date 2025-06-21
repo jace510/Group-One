@@ -17,6 +17,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <!-- Main Navigation -->
@@ -198,8 +199,67 @@
             });
         });
     </script>
+
+    <?php
+    $openLogin = isset($_GET['auth']) && $_GET['auth'] === 'required';
+    $redirectTo = isset($_GET['redirect']) ? $_GET['redirect'] : '';
+    ?>
+
     <?php include 'modal.php'; ?>
+    
     <script src="main.js"></script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const authFailed = urlParams.get('auth');
+
+            if (authFailed === 'failed') {
+                openModal('loginModal');
+            }
+        });
+    </script>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            <?php if ($openLogin): ?>
+                openModal('loginModal');
+            <?php endif; ?>
+        });
+    </script>
+
+    <?php
+    $loginFailed = isset($_GET['auth']) && $_GET['auth'] === 'failed';
+    $redirectTo = isset($_GET['redirect']) ? $_GET['redirect'] : '';
+    ?>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            <?php if ($loginFailed): ?>
+                openModal('loginModal');
+                alert('Login failed. Please check your credentials.');
+            <?php endif; ?>
+        });
+    </script>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const show = params.get('show');
+            if (show === 'login') {
+                openModal('loginModal');
+            }
+        });
+    </script>
+
+    <?php if (isset($_GET['auth']) && $_GET['auth'] === 'register_success'): ?>
+        <script>
+            alert("Registration successful! Please log in.");
+        </script>
+    <?php endif; ?>
+
 </body>
 
 </html>

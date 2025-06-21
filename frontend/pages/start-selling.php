@@ -1,8 +1,7 @@
 <?php
 include '../../backend/auth/header.php';
-
 include '../modal.php';
-    ?>
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,6 +51,7 @@ include '../modal.php';
             letter-spacing: 1px;
             transition: all 0.3s;
             box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+            cursor: pointer;
         }
 
         .cta-button:hover {
@@ -161,6 +161,7 @@ include '../modal.php';
             text-transform: uppercase;
             letter-spacing: 0.5px;
             transition: all 0.3s;
+            cursor: pointer;
         }
 
         .secondary-cta:hover {
@@ -255,7 +256,8 @@ include '../modal.php';
             <h1>Start Selling on Railed</h1>
             <p>Turn your closet into cash. Sell authentic fashion pieces to buyers worldwide with our trusted
                 marketplace.</p>
-            <a href="#" class="cta-button" onclick="goToListingPage()">Start Selling Now</a>
+            <a href="#" class="cta-button" onclick="goToListingPage()">Start
+                Selling Now</a>
         </div>
     </section>
 
@@ -371,6 +373,8 @@ include '../modal.php';
             </div>
         </div>
     </footer>
+    
+    <script src="../main.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -389,9 +393,9 @@ include '../modal.php';
             // Step card hover effects
             const stepCards = document.querySelectorAll('.step-card');
             stepCards.forEach(card => {
-                card.addEventListener('mouseenter', function () {
-                    this.style.cursor = 'pointer';
-                });
+                // card.addEventListener('mouseenter', function () {
+                //     this.style.cursor = 'pointer';
+                // });
             });
 
             // Animate elements on scroll
@@ -419,11 +423,16 @@ include '../modal.php';
         });
 
         function goToListingPage() {
-            // In a real application, this would navigate to the listing page
-            // For this demo, we'll show an alert
-            alert("This would navigate to the listing page. In the actual implementation, you would use:\nwindow.location.href = 'list-item.html';");
+            const isLoggedIn = <?php echo isset($_SESSION['user_id']) ? 'true' : 'false'; ?>;
+
+            if (isLoggedIn) {
+                window.location.href = "/Group-One/frontend/pages/listing-item.php";
+            } else {
+                openModal('loginModal'); // Make sure this modal function exists
+            }
         }
     </script>
+
 </body>
 
 </html>

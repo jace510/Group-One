@@ -1,13 +1,17 @@
 <?php
 session_start(); // Start session for login
 
-require 'connection.php';
+require '../connection.php';
+
+$redirect = $_POST['redirect'] ?? 'home.php'; // Default to home if none provided
 
 $email = trim($_POST['email']);
 $password = $_POST['password'];
 
 if (empty($email) || empty($password)) {
-    die("Please enter both email and password.");
+    // Redirect with auth failure
+    header("Location: ../../frontend/home.php?auth=failed&redirect=" . urlencode($redirect));
+    exit();
 }
 
 // Get user by email
@@ -22,20 +26,27 @@ if ($result->num_rows === 1) {
     $user = $result->fetch_assoc();
 
     // Verify password
-    if (password_verify($password, $user['Password'])) {
+    if (password_verify($password, $user['password'])) {
         $_SESSION['user_id'] = $user['id'];
-        $_SESSION['user_name'] = $user['FirstName'];
-        header("Location: ../../frontend/home.php");
-        echo "Login successful! Welcome, " . $user['FirstName'] . ".";
+
+        // Redirect to originally requested page
+        header("Location: ../../frontend/" . $redirect);
+        $stmt->close();
+        $conn->close();
         exit();
-            
+
     } else {
-        echo " Incorrect password.";
+        // Incorrect password, redirect back with auth failed
+        $stmt->close();
+        $conn->close();
+        header("Location: ../../frontend/home.php?auth=failed&redirect=" . urlencode($redirect));
+        exit();
     }
 } else {
-    echo "User not found.";//hapa we'll have to employ some javascript so that the user not found comes as an alert but we can finish on functionality first
+    // No user found, redirect back with auth failed
+    $stmt->close();
+    $conn->close();
+    header("Location: ../../frontend/home.php?auth=failed&redirect=" . urlencode($redirect));
+    exit();
 }
-
-$stmt->close();
-$conn->close();
 ?>

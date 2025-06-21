@@ -1,6 +1,13 @@
 <?php
-session_start();
+session_start(); // Start the session
+
+// Unset all session variables
 session_unset();
+
+// Destroy the session
 session_destroy();
-header("Location: index.php");
-exit;
+
+// Optional: redirect to home page or login page
+header("Location: /Group-One/frontend/home.php");
+exit();
+?>

@@ -48,3 +48,15 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   document.body.style.overflow = "auto";
 });
+
+window.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('auth') === 'failed') {
+    openModal('loginModal');
+
+    // Remove the query parameter from the URL
+    params.delete('auth');
+    const newUrl = window.location.pathname + '?' + params.toString();
+    window.history.replaceState({}, '', newUrl);
+  }
+});

@@ -693,6 +693,8 @@ include '../modal.php';
         </div>
     </footer>
 
+    <script src="../main.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Thumbnail image switching
