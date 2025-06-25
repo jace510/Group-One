@@ -1,4 +1,19 @@
-<?php include '../backend/auth/header.php'; ?>
+<?php include '../backend/auth/header.php';
+require_once '../backend/connection.php';
+require_once 'MySQLSessionHandler.php';
+
+$handler = new MySQLSessionHandler($pdo);
+session_set_save_handler($handler, true);
+session_start();
+
+// Example usage
+if (!isset($_SESSION['username'])) {
+    $_SESSION['username'] = "Guest";
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,7 +34,8 @@
 </head>
 
 <body>
-
+    
+     <h2>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</h2>
     <!-- Main Navigation -->
     <nav class="main-nav">
         <div class="main-nav-content">
