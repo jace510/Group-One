@@ -10,7 +10,7 @@
 
       <!-- Corrected: Using a relative path for the form action -->
       <?php $redirectTo = isset($_GET['redirect']) ? $_GET['redirect'] : 'home.php'; ?>
-      <form action="../backend/auth/login.php" method="post">
+      <form action="/GROUP-ONE/backend/auth/login.php" method="post">
         <input type="hidden" name="redirect" value="<?php echo htmlspecialchars($redirectTo); ?>">
         <div class="form-row">
           <label for="login-email">Email:</label>
@@ -44,7 +44,7 @@
       <h1>Create Your Account</h1>
       <p class="slogan">Join our community and start trading.</p>
 
-      <form action="../backend/auth/register.php" method="post">
+      <form action="/GROUP-ONE/backend/auth/register.php" method="post">
         <div class="form-row">
           <label for="register-username">Username:</label>
           <input type="text" id="register-username" name="username" class="custom-input" required />

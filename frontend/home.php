@@ -21,9 +21,7 @@
 </head>
 
 <body>
-    
-     <h2>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</h2>
-    <!-- Main Navigation -->
+        <!-- Main Navigation -->
     <nav class="main-nav">
         <div class="main-nav-content">
             <div class="nav-category"><a href="#">Designers</a></div>
