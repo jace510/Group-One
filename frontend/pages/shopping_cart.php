@@ -610,7 +610,7 @@ include '../modal.php';
                     <div class="empty-cart-icon">🛒</div>
                     <h3>Your cart is empty</h3>
                     <p>Looks like you haven't added any items to your cart yet.</p>
-                    <button class="btn-primary" onclick="window.location.href='../index.php'">Start Shopping</button>
+                    <button class="btn-primary" onclick="window.location.href='../home.php'">Start Shopping</button>
                 </div>
             `;
         }
@@ -678,40 +678,6 @@ include '../modal.php';
                 }, 2000);
             }
         }
-
-        // Move saved items to cart
-        function moveToCart(button) {
-            const savedItem = button.closest('.saved-item');
-            const itemInfo = savedItem.querySelector('.saved-item-info');
-            const itemName = itemInfo.querySelector('h4').textContent;
-            const itemPrice = itemInfo.querySelector('.saved-item-price').textContent;
-            
-            // Animation
-            button.textContent = 'Added!';
-            button.style.background = '#28a745';
-            button.disabled = true;
-            
-            setTimeout(() => {
-                savedItem.style.animation = 'fadeOut 0.3s ease-out';
-                setTimeout(() => {
-                    savedItem.remove();
-                    updateCartCount();
-                }, 300);
-            }, 1000);
-        }
-
-        // Add event listeners for saved items
-        document.addEventListener('DOMContentLoaded', function() {
-            const moveToCartButtons = document.querySelectorAll('.saved-item .btn-small');
-            moveToCartButtons.forEach(button => {
-                if (button.textContent.includes('Move to Cart')) {
-                    button.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        moveToCart(this);
-                    });
-                }
-            });
-        });
 
         // CSS Animation for fade out
         const style = document.createElement('style');
