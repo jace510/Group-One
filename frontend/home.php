@@ -1,4 +1,6 @@
-<?php include '../backend/auth/header.php'; ?>
+<?php include '../backend/auth/header.php';?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,7 +21,8 @@
 </head>
 
 <body>
-
+    
+     <h2>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</h2>
     <!-- Main Navigation -->
     <nav class="main-nav">
         <div class="main-nav-content">
