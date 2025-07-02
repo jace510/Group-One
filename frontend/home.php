@@ -38,7 +38,7 @@
                 more.</p>
             <div class="cta-buttons">
                 <a href="#" class="cta-btn cta-primary">Shop Now</a>
-                <a href="#" class="cta-btn cta-secondary">Start Selling</a>
+                <a href="/Group-One/frontend/pages/start-selling.php" class="cta-btn cta-secondary">Start Selling</a>
             </div>
         </div>
     </section>
@@ -206,7 +206,7 @@
     ?>
 
     <?php include 'modal.php'; ?>
-    
+
     <script src="main.js"></script>
 
 
@@ -259,6 +259,7 @@
             alert("Registration successful! Please log in.");
         </script>
     <?php endif; ?>
+
 
 </body>
 
