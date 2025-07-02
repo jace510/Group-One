@@ -555,7 +555,7 @@ body {
 @media (max-width: 768px) {
   .header-content {
     justify-content: space-between;
-    padding: 15px 20px;
+    padding: 15px 2px;
     height: 60px;
   }
 
