@@ -26,8 +26,3 @@ CREATE TABLE
     );
 
 
-CREATE TABLE `sessions` (
-  `id` VARCHAR(128) NOT NULL PRIMARY KEY,
-  `data` TEXT NOT NULL,
-  `timestamp` INT(11) NOT NULL
-);   

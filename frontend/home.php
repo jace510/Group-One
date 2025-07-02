@@ -1,17 +1,4 @@
-<?php include '../backend/auth/header.php';
-require_once '../backend/connection.php';
-require_once 'MySQLSessionHandler.php';
-
-$handler = new MySQLSessionHandler($pdo);
-session_set_save_handler($handler, true);
-session_start();
-
-// Example usage
-if (!isset($_SESSION['username'])) {
-    $_SESSION['username'] = "Guest";
-}
-
-?>
+<?php include '../backend/auth/header.php';?>
 
 
 <!DOCTYPE html>
