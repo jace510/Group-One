@@ -1,6 +1,7 @@
 <?php
 include '../../backend/auth/header.php';
 include '../modal.php';
+include '../../backend/nav.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -244,10 +245,13 @@ include '../modal.php';
     <!-- Main Navigation -->
     <nav class="main-nav">
         <div class="main-nav-content">
-            <div class="nav-category"><a href="#">Designers</a></div>
-            <div class="nav-category"><a href="#">Menswear</a></div>
-            <div class="nav-category"><a href="#">Womenswear</a></div>
-            <div class="nav-category"><a href="#">Sale</a></div>
+            <?php foreach ($topCategories as $cat): ?>
+                <div class="nav-category">
+                    <a href="browse.php?category=<?= urlencode($cat['slug']) ?>">
+                        <?= htmlspecialchars($cat['name']) ?>
+                    </a>
+                </div>
+            <?php endforeach; ?>
         </div>
     </nav>
     <!-- Sell Hero Section -->

@@ -7,8 +7,13 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 include '../../backend/auth/header.php';
+include '../../backend/nav.php';
 
 include '../modal.php';
+
+$categoryCollection = $client->Railed->categories;
+
+$categories = $categoryCollection->find(['parent_id' => null])->toArray();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -399,10 +404,13 @@ include '../modal.php';
     <!-- Main Navigation - Exact same as sell page -->
     <nav class="main-nav">
         <div class="main-nav-content">
-            <div class="nav-category"><a href="#">Designers</a></div>
-            <div class="nav-category"><a href="#">Menswear</a></div>
-            <div class="nav-category"><a href="#">Womenswear</a></div>
-            <div class="nav-category"><a href="#">Sale</a></div>
+            <?php foreach ($topCategories as $cat): ?>
+                <div class="nav-category">
+                    <a href="browse.php?category=<?= urlencode($cat['slug']) ?>">
+                        <?= htmlspecialchars($cat['name']) ?>
+                    </a>
+                </div>
+            <?php endforeach; ?>
         </div>
     </nav>
 
@@ -417,7 +425,8 @@ include '../modal.php';
     <!-- Listing Form Section -->
     <section class="listing-form-section">
         <div class="section-content">
-            <form class="listing-form" id="listingForm">
+            <form class="listing-form" id="listingForm"  method="POST"  action="/GROUP-ONE/backend/list_item.php" 
+                enctype="multipart/form-data">
                 <!-- Photos Section -->
                 <div class="form-section">
                     <h2 class="form-section-title">
@@ -432,7 +441,8 @@ include '../modal.php';
                             onclick="document.getElementById('photoInput').click()">
                             Choose Photos
                         </button>
-                        <input type="file" id="photoInput" class="hidden-file-input" multiple accept="image/*">
+                        <input type="file" id="photoInput" class="hidden-file-input" name="photos[]" multiple
+                            accept="image/*">
                     </div>
                     <div class="photo-preview-grid" id="photoPreviewGrid"></div>
                 </div>
@@ -446,36 +456,37 @@ include '../modal.php';
                     <div class="form-grid">
                         <div class="form-group">
                             <label class="form-label">Brand</label>
-                            <input type="text" class="form-input" placeholder="e.g., Gucci, Nike, Supreme" required>
+                            <input type="text" class="form-input" name="brand" required placeholder="e.g. Nike, Polo">
                         </div>
                         <div class="form-group">
                             <label class="form-label">Category</label>
-                            <select class="form-select" required>
+                            <select class="form-select" required name="category">
                                 <option value="">Select Category</option>
-                                <option value="clothing">Clothing</option>
-                                <option value="shoes">Shoes</option>
-                                <option value="accessories">Accessories</option>
-                                <option value="bags">Bags</option>
-                                <option value="jewelry">Jewelry</option>
-                                <option value="watches">Watches</option>
+                                <?php foreach ($categories as $cat): ?>
+                                    <option value="<?= htmlspecialchars((string) $cat['_id']) ?>">
+                                        <?= htmlspecialchars($cat['name']) ?>
+                                    </option>
+                                <?php endforeach; ?>
                             </select>
+
                         </div>
                         <div class="form-group">
                             <label class="form-label">Size</label>
-                            <input type="text" class="form-input" placeholder="e.g., M, 32, 10.5" required>
+                            <input type="text" class="form-input" placeholder="e.g., M, 32, 10.5" name="size" required>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Color</label>
-                            <input type="text" class="form-input" placeholder="e.g., Black, Navy Blue" required>
+                            <input type="text" class="form-input" placeholder="e.g., Black, Navy Blue" name="color"
+                                required>
                         </div>
                         <div class="form-group full-width">
                             <label class="form-label">Title</label>
                             <input type="text" class="form-input" placeholder="Descriptive title for your item"
-                                required>
+                                name="title" required>
                         </div>
                         <div class="form-group full-width">
                             <label class="form-label">Description</label>
-                            <textarea class="form-textarea"
+                            <textarea class="form-textarea" name="description"
                                 placeholder="Detailed description including fit, materials, condition notes, etc."
                                 required></textarea>
                         </div>
@@ -514,8 +525,9 @@ include '../modal.php';
                             <div class="condition-description">Well-worn with obvious signs of use</div>
                         </div>
                     </div>
-                </div>
 
+                    <input type="hidden" name="condition" id="conditionInput">
+                </div>
                 <!-- Pricing Section -->
                 <div class="form-section">
                     <h2 class="form-section-title">
@@ -527,31 +539,31 @@ include '../modal.php';
                             <label class="form-label">Asking Price</label>
                             <div class="price-input-group">
                                 <input type="number" class="form-input price-input" placeholder="0.00" step="0.01"
-                                    min="1" required>
+                                    min="1" name="asking_price" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Original Retail Price (Optional)</label>
                             <div class="price-input-group">
-                                <input type="number" class="form-input price-input" placeholder="0.00" step="0.01"
-                                    min="1">
+                                <input type="number" class="form-input price-input" name="original_price"
+                                    placeholder="0.00" step="0.01" min="1">
                             </div>
                         </div>
                         <div class="form-group full-width">
                             <label class="form-label">Additional Notes (Optional)</label>
-                            <textarea class="form-textarea" rows="3"
+                            <textarea class="form-textarea" rows="3" name="pricing_notes"
                                 placeholder="Any additional information about pricing, shipping, or the item"></textarea>
                         </div>
                     </div>
-                </div>
-
-                <!-- Submit Section -->
-                <div class="submit-section">
-                    <button type="submit" class="submit-button" id="submitButton">
-                        List Item for Sale
-                    </button>
-                </div>
+                    <!-- Submit Section -->
+                    <div class="submit-section">
+                        <button type="submit" class="submit-button" id="submitButton">
+                            List Item for Sale
+                        </button>
+                    </div>
             </form>
+        </div>
+        </div>
         </div>
     </section>
 
@@ -723,9 +735,7 @@ include '../modal.php';
             }
         }
 
-        function handleFormSubmit(e) {
-            e.preventDefault();
-
+        function handleFormSubmit() {
             // Validate required fields
             if (selectedPhotos.length === 0) {
                 alert('Please upload at least one photo of your item.');
@@ -737,27 +747,12 @@ include '../modal.php';
                 return;
             }
 
+            document.getElementById('conditionInput').value = selectedCondition;
+
             // Show loading state
             const submitButton = document.getElementById('submitButton');
-            const originalText = submitButton.textContent;
-            submitButton.innerHTML = '<span class="spinner"></span>Processing...';
+            submitButton.textContent = 'Uploading...';
             submitButton.disabled = true;
-
-            // Simulate form processing
-            setTimeout(() => {
-                alert('Success! Your item has been listed for sale. You will receive a confirmation email shortly.');
-
-                // Reset form
-                document.getElementById('listingForm').reset();
-                selectedPhotos = [];
-                selectedCondition = null;
-                document.getElementById('photoPreviewGrid').innerHTML = '';
-                document.querySelectorAll('.condition-option').forEach(opt => opt.classList.remove('selected'));
-
-                // Reset button
-                submitButton.textContent = originalText;
-                submitButton.disabled = false;
-            }, 2000);
         }
 
         // Form validation helpers

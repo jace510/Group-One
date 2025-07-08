@@ -1,7 +1,34 @@
 <?php
 include '../../backend/auth/header.php';
 include '../modal.php';
-    ?>
+include '../../backend/nav.php';
+
+require '../../backend/mongo.php'; // Adjust path if needed
+$collection = $client->Railed->products;
+
+$categorySlug = $_GET['category'] ?? null;
+$category = null;
+$items = [];
+$itemCount = 0;
+
+if ($categorySlug) {
+    $categories = $client->Railed->categories;
+    $products = $client->Railed->products;
+
+    // Find category
+    $category = $categories->findOne(['slug' => $categorySlug]);
+
+    if ($category) {
+        $cursor = $products->find([
+            'category_id' => $category['_id'],
+            'status' => 'available'
+        ]);
+
+        $items = iterator_to_array($cursor);
+        $itemCount = count($items);
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -340,10 +367,13 @@ include '../modal.php';
     <!-- Main Navigation -->
     <nav class="main-nav">
         <div class="main-nav-content">
-            <div class="nav-category"><a href="#">Designers</a></div>
-            <div class="nav-category"><a href="#">Menswear</a></div>
-            <div class="nav-category"><a href="#">Womenswear</a></div>
-            <div class="nav-category"><a href="#">Sale</a></div>
+            <?php foreach ($topCategories as $cat): ?>
+                <div class="nav-category">
+                    <a href="browse.php?category=<?= urlencode($cat['slug']) ?>">
+                        <?= htmlspecialchars($cat['name']) ?>
+                    </a>
+                </div>
+            <?php endforeach; ?>
         </div>
     </nav>
 
@@ -469,137 +499,48 @@ include '../modal.php';
         <main class="catalog-content">
             <div class="catalog-header">
                 <div>
-                    <h1 class="catalog-title">Menswear</h1>
-                    <p class="catalog-info">1,247 items available</p>
-                </div>
-
-                <div class="sort-options">
-                    <span class="sort-label">Sort by:</span>
-                    <select class="sort-select">
-                        <option>Newest</option>
-                        <option>Price: Low to High</option>
-                        <option>Price: High to Low</option>
-                        <option>Most Popular</option>
-                        <option>Brand A-Z</option>
-                    </select>
-
-                    <div class="view-toggle">
-                        <button class="view-btn active" data-view="grid">⊞</button>
-                        <button class="view-btn" data-view="list">☰</button>
-                    </div>
+                    <h1 class="catalog-title">
+                        <?= isset($category['name']) ? htmlspecialchars($category['name']) : 'Unknown Category' ?>
+                    </h1>
+                    <p class="catalog-info"><?= $itemCount ?? 0 ?> items available</p>
                 </div>
             </div>
 
             <div class="product-grid" id="productGrid">
-                <div class="product-card">
-                    <div class="product-image">
-                        <div class="product-badge new">NEW</div>
-                        👕
-                    </div>
-                    <div class="product-info">
-                        <div class="product-brand">Supreme</div>
-                        <div class="product-title">Box Logo Hoodie Black</div>
-                        <div class="product-price">$450</div>
-                        <div class="product-size">Size M</div>
-                        <div class="product-condition">New with Tags</div>
-                    </div>
-                </div>
+                <?php if (!empty($items)): ?>
+                    <?php foreach ($items as $item): ?>
+                        <?php
+                        $title = htmlspecialchars($item['title'] ?? 'Untitled');
+                        $brand = htmlspecialchars($item['brand'] ?? 'Unknown');
+                        $price = number_format($item['pricing']['asking_price'] ?? 0, 2);
+                        $size = htmlspecialchars($item['size'] ?? '-');
+                        $condition = htmlspecialchars($item['condition']['name'] ?? 'Unknown');
+                        $img = !empty($item['photos'][0]['url']) ? htmlspecialchars($item['photos'][0]['url']) : 'default.jpg';
+                        $badge = !empty($item['condition']['name'])
+                            ? '<div class="product-badge">' . htmlspecialchars($item['condition']['name']) . '</div>'
+                            : '';
+                        ?>
 
-                <div class="product-card">
-                    <div class="product-image">👟</div>
-                    <div class="product-info">
-                        <div class="product-brand">Nike</div>
-                        <div class="product-title">Air Jordan 1 Retro High Chicago</div>
-                        <div class="product-price">$325</div>
-                        <div class="product-size">Size 10</div>
-                        <div class="product-condition">Very Good</div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image">🧥</div>
-                    <div class="product-info">
-                        <div class="product-brand">Stone Island</div>
-                        <div class="product-title">Nylon Metal Jacket Navy</div>
-                        <div class="product-price">$275</div>
-                        <div class="product-size">Size L</div>
-                        <div class="product-condition">Good</div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image">
-                        <div class="product-badge sold">SOLD</div>
-                        👖
-                    </div>
-                    <div class="product-info">
-                        <div class="product-brand">Chrome Hearts</div>
-                        <div class="product-title">Cross Patch Jeans Black</div>
-                        <div class="product-price">$850</div>
-                        <div class="product-size">Size 32</div>
-                        <div class="product-condition">New without Tags</div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image">👕</div>
-                    <div class="product-info">
-                        <div class="product-brand">Rick Owens</div>
-                        <div class="product-title">DRKSHDW Cotton Tee</div>
-                        <div class="product-price">$120</div>
-                        <div class="product-size">Size S</div>
-                        <div class="product-condition">Very Good</div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image">
-                        <div class="product-badge new">NEW</div>
-                        🧥
-                    </div>
-                    <div class="product-info">
-                        <div class="product-brand">Balenciaga</div>
-                        <div class="product-title">Triple S Sneakers White</div>
-                        <div class="product-price">$695</div>
-                        <div class="product-size">Size 42</div>
-                        <div class="product-condition">New with Tags</div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image">👕</div>
-                    <div class="product-info">
-                        <div class="product-brand">Comme des Garçons</div>
-                        <div class="product-title">PLAY Heart Logo Tee</div>
-                        <div class="product-price">$85</div>
-                        <div class="product-size">Size M</div>
-                        <div class="product-condition">Good</div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image">🧥</div>
-                    <div class="product-info">
-                        <div class="product-brand">Kapital</div>
-                        <div class="product-title">Kountry Smiley Cardigan</div>
-                        <div class="product-price">$340</div>
-                        <div class="product-size">Size L</div>
-                        <div class="product-condition">Very Good</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Pagination -->
-            <div class="pagination">
-                <button class="pagination-btn">&lt;</button>
-                <button class="pagination-btn active">1</button>
-                <button class="pagination-btn">2</button>
-                <button class="pagination-btn">3</button>
-                <button class="pagination-btn">4</button>
-                <button class="pagination-btn">5</button>
-                <button class="pagination-btn">&gt;</button>
+                        <a href="product-page.php?id=<?= $item['_id'] ?>" div class="product-card">
+                            <div class="product-image">
+                                <?= $badge ?>
+                                <img src="<?= $img ?>" alt="<?= $title ?>" />
+                            </div>
+                            <div class="product-info">
+                                <div class="product-brand"><?= $brand ?></div>
+                                <div class="product-title"><?= $title ?></div>
+                                <div class="product-price">$<?= $price ?></div>
+                                <div class="product-size">Size <?= $size ?></div>
+                                <div class="product-condition"><?= $condition ?></div>
+                            </div>
+                        </a>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p>No products found in this category.</p>
+                <?php endif; ?>
             </div>
         </main>
+
     </div>
 
     <!-- Footer -->
@@ -651,7 +592,7 @@ include '../modal.php';
 
     <?php include '../modal.php' ?>
     <script src="../main.js"></script>
-    
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // View toggle functionality

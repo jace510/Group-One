@@ -1,8 +1,46 @@
 <?php
 include '../../backend/auth/header.php';
+include '../../backend/nav.php';
 
 include '../modal.php';
-    ?>
+
+require '../../backend/mongo.php';
+use MongoDB\BSON\ObjectId;
+
+$productId = $_GET['id'] ?? null;
+
+if (!$productId) {
+    die('Product ID not specified');
+}
+
+// Fetch product
+$product = $client->Railed->products->findOne([
+    '_id' => new MongoDB\BSON\ObjectId($productId)
+]);
+
+if (!$product) {
+    die('Product not found');
+}
+
+// Fetch category (no nesting)
+$category = $client->Railed->categories->findOne([
+    '_id' => $product['category_id']
+]);
+
+// Exclude the current product from the results
+$relatedCursor = $client->Railed->products->find(
+    [
+        '_id' => ['$ne' => $product['_id']],
+        'status' => 'available' // optional filter
+    ],
+    [
+        'limit' => 4, // Limit how many to show
+        'sort' => ['created_at' => -1] // or use $sample later if you want full randomness
+    ]
+);
+
+$relatedItems = iterator_to_array($relatedCursor);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -88,6 +126,14 @@ include '../modal.php';
             gap: 15px;
             overflow-x: auto;
             padding: 10px 0;
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* fills container and crops image */
+            display: block;
         }
 
         .thumbnail {
@@ -494,112 +540,106 @@ include '../modal.php';
 
     <nav class="main-nav">
         <div class="main-nav-content">
-            <div class="nav-category"><a href="#">Designers</a></div>
-            <div class="nav-category"><a href="#">Menswear</a></div>
-            <div class="nav-category"><a href="#">Womenswear</a></div>
-            <div class="nav-category"><a href="#">Sale</a></div>
+            <?php foreach ($topCategories as $cat): ?>
+                <div class="nav-category">
+                    <a href="browse.php?category=<?= urlencode($cat['slug']) ?>">
+                        <?= htmlspecialchars($cat['name']) ?>
+                    </a>
+                </div>
+            <?php endforeach; ?>
         </div>
     </nav>
 
     <!-- Breadcrumb -->
     <div class="breadcrumb">
         <div class="breadcrumb-content">
-            <a href="index.html">Home</a> / <a href="catalog.html">Menswear</a> / <a href="#">Hoodies & Sweatshirts</a>
-            / Supreme Box Logo Hoodie Black
+            <a href="/group-one/frontend/home.php">Home</a> /
+            <a href="catalog.php?category=<?= urlencode($category['slug']) ?>">
+                <?= htmlspecialchars($category['name']) ?>
+            </a> /
+            <?= htmlspecialchars($product['title']) ?>
         </div>
     </div>
 
+
     <!-- Product Detail Container -->
     <div class="product-detail-container">
-        <!-- Product Images -->
         <div class="product-images">
             <div class="main-image" id="mainImage">
-                <div class="product-badge">NEW</div>
-                👕
+                <?php if (!empty($product['condition']['name'])): ?>
+                    <div class="product-badge"><?= htmlspecialchars($product['condition']) ?></div>
+                <?php endif; ?>
+                <img src="<?= htmlspecialchars($product['photos'][0]['url'] ?? 'default.jpg') ?>" alt="Main Image">
             </div>
+
             <div class="thumbnail-container">
-                <div class="thumbnail active" data-image="👕">👕</div>
-                <div class="thumbnail" data-image="🔍">🔍</div>
-                <div class="thumbnail" data-image="📏">📏</div>
-                <div class="thumbnail" data-image="🏷️">🏷️</div>
+                <?php foreach ($product['photos'] ?? [] as $image): ?>
+                    <div class="thumbnail" data-image="<?= htmlspecialchars($image['url']) ?>">
+                        <img src="<?= htmlspecialchars($image['thumbnail_url'] ?? $image['url']) ?>" alt="Thumb">
+                    </div>
+                <?php endforeach; ?>
             </div>
         </div>
 
         <!-- Product Info -->
         <div class="product-info">
-            <div class="product-brand">Supreme</div>
-            <h1 class="product-title">Box Logo Hoodie Black</h1>
-            <div class="product-price">$450</div>
+            <div class="product-brand"><?= htmlspecialchars($product['brand']) ?></div>
+            <h1 class="product-title"><?= htmlspecialchars($product['title']) ?></h1>
+            <div class="product-price">$<?= number_format($product['pricing']['asking_price'], 2) ?></div>
+
 
             <div class="product-details">
                 <div class="detail-row">
                     <span class="detail-label">Size</span>
-                    <span class="detail-value">Medium</span>
+                    <span class="detail-value"><?= htmlspecialchars($product['size'] ?? '-') ?></span>
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">Condition</span>
-                    <span class="detail-value">
-                        <span class="condition-badge">New with Tags</span>
-                    </span>
+                    <span class="detail-value"><span
+                            class="condition-badge"><?= htmlspecialchars($product['condition'] ?? '-') ?></span></span>
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">Color</span>
-                    <span class="detail-value">Black</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Material</span>
-                    <span class="detail-value">100% Cotton</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Season</span>
-                    <span class="detail-value">Fall/Winter 2024</span>
+                    <span class="detail-value"><?= htmlspecialchars($product['color'] ?? '-') ?></span>
                 </div>
             </div>
+
 
             <div class="size-section">
                 <div class="size-label">Available Sizes</div>
                 <div class="size-options">
-                    <div class="size-option unavailable">XS</div>
-                    <div class="size-option unavailable">S</div>
-                    <div class="size-option selected">M</div>
-                    <div class="size-option">L</div>
-                    <div class="size-option unavailable">XL</div>
+                    <?php foreach ($product['stock'] ?? [] as $stock): ?>
+                        <div class="size-option <?= !$stock['is_available'] ? 'unavailable' : '' ?>">
+                            <?= htmlspecialchars($stock['size']) ?>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
 
             <div class="action-buttons">
                 <button class="buy-btn" id="buyBtn">Buy Now</button>
-                <button class="wishlist-btn" id="wishlistBtn">Add to Wishlist ♡</button>
+                <button class="wishlist-btn" id="wishlistBtn">Add to Cart</button>
             </div>
 
             <div class="product-description">
                 <h3 class="description-title">Description</h3>
-                <p class="description-text">
-                    Iconic Supreme Box Logo Hoodie in classic black colorway. Features the legendary box logo
-                    embroidered on the chest. Made from premium heavyweight cotton fleece with a comfortable relaxed
-                    fit. This piece is brand new with original tags attached. A must-have for any Supreme collector or
-                    streetwear enthusiast.
-                </p>
+                <p class="description-text"><?= nl2br(htmlspecialchars($product['description'])) ?></p>
             </div>
+
 
             <div class="seller-info">
                 <div class="seller-header">
                     <div class="seller-avatar">👤</div>
                     <div class="seller-details">
-                        <h4>StreetWearKing</h4>
+                        <h4><?= htmlspecialchars($product['seller_info']['username'] ?? 'Unknown') ?></h4>
                         <div class="seller-rating">
                             <span class="stars">★★★★★</span>
-                            <span>4.9 (127 reviews)</span>
+                            <span><?= htmlspecialchars($product['seller_info']['rating'] ?? 0) ?>
+                                (<?= htmlspecialchars($product['seller_info']['review_count'] ?? 0) ?> reviews)</span>
                         </div>
                     </div>
                 </div>
-                <div class="seller-stats">
-                    <div>📦 Fast Shipping</div>
-                    <div>✅ Verified Seller</div>
-                    <div>🛡️ Protected Purchase</div>
-                </div>
             </div>
-
             <div class="auth-badge">
                 <h3>🔐 Authentication Guaranteed</h3>
                 <p>Every item is verified by our team of experts before shipping</p>
@@ -607,44 +647,28 @@ include '../modal.php';
         </div>
     </div>
 
-    <!-- Related Products -->
     <section class="related-products">
         <h2 class="related-title">You Might Also Like</h2>
         <div class="related-grid">
-            <div class="related-card">
-                <div class="related-image">👟</div>
-                <div class="related-info">
-                    <div class="related-brand">Nike</div>
-                    <div class="related-title-text">Air Jordan 1 Retro High Chicago</div>
-                    <div class="related-price">$325</div>
-                </div>
-            </div>
-            <div class="related-card">
-                <div class="related-image">🧥</div>
-                <div class="related-info">
-                    <div class="related-brand">Stone Island</div>
-                    <div class="related-title-text">Nylon Metal Jacket Navy</div>
-                    <div class="related-price">$275</div>
-                </div>
-            </div>
-            <div class="related-card">
-                <div class="related-image">👖</div>
-                <div class="related-info">
-                    <div class="related-brand">Chrome Hearts</div>
-                    <div class="related-title-text">Cross Patch Jeans Black</div>
-                    <div class="related-price">$850</div>
-                </div>
-            </div>
-            <div class="related-card">
-                <div class="related-image">👕</div>
-                <div class="related-info">
-                    <div class="related-brand">Rick Owens</div>
-                    <div class="related-title-text">DRKSHDW Cotton Tee</div>
-                    <div class="related-price">$120</div>
-                </div>
-            </div>
+            <?php foreach ($relatedItems as $rel): ?>
+                <?php
+                $img = !empty($rel['photos'][0]['url']) ? $rel['images'][0]['url'] : 'default.jpg';
+                $price = number_format($rel['pricing']['asking_price'] ?? 0, 2);
+                ?>
+                <a href="product.php?id=<?= $rel['_id'] ?>" class="related-card">
+                    <div class="related-image">
+                        <img src="<?= htmlspecialchars($img) ?>" alt="<?= htmlspecialchars($rel['title']) ?>">
+                    </div>
+                    <div class="related-info">
+                        <div class="related-brand"><?= htmlspecialchars($rel['brand']) ?></div>
+                        <div class="related-title-text"><?= htmlspecialchars($rel['title']) ?></div>
+                        <div class="related-price">$<?= $price ?></div>
+                    </div>
+                </a>
+            <?php endforeach; ?>
         </div>
     </section>
+
 
     <!-- Footer -->
     <footer class="footer">
