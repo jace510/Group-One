@@ -6,6 +6,7 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 include '../../backend/auth/header.php';
+include '../../backend/nav.php';
 
 include '../modal.php';
 ?>
@@ -266,10 +267,13 @@ include '../modal.php';
     <!-- Main Navigation -->
     <nav class="main-nav">
         <div class="main-nav-content">
-            <div class="nav-category"><a href="#">Designers</a></div>
-            <div class="nav-category"><a href="#">Menswear</a></div>
-            <div class="nav-category"><a href="#">Womenswear</a></div>
-            <div class="nav-category"><a href="#">Sale</a></div>
+            <?php foreach ($topCategories as $cat): ?>
+                <div class="nav-category">
+                    <a href="catalog.php?category=<?= urlencode($cat['slug']) ?>">
+                        <?= htmlspecialchars($cat['name']) ?>
+                    </a>
+                </div>
+            <?php endforeach; ?>
         </div>
     </nav>
 

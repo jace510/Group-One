@@ -1,5 +1,5 @@
-<?php include '../backend/auth/header.php';?>
-
+<?php include '../backend/auth/header.php'; ?>
+<?php include '../backend/nav.php'; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -21,15 +21,20 @@
 </head>
 
 <body>
-        <!-- Main Navigation -->
+    <!-- Main Navigation -->
     <nav class="main-nav">
-        <div class="main-nav-content">
-            <div class="nav-category"><a href="#">Designers</a></div>
-            <div class="nav-category"><a href="#">Menswear</a></div>
-            <div class="nav-category"><a href="#">Womenswear</a></div>
-            <div class="nav-category"><a href="#">Sale</a></div>
+        <echo class="main-nav-content">
+            <?php foreach ($topCategories as $cat): ?>
+                <div class="nav-category">
+                    <a href="pages/browse.php?category=<?= urlencode($cat['slug']) ?>">
+                        <?= htmlspecialchars($cat['name']) ?>
+                    </a>
+                </div>
+            <?php endforeach; ?>
+            <?php echo "<!-- DEBUG: Found " . count($topCategories) . " categories -->"; ?>
         </div>
     </nav>
+
 
     <!-- Hero Section -->
     <section class="hero">
@@ -44,83 +49,10 @@
         </div>
     </section>
 
-    <!-- Featured Brands -->
-    <section class="featured-brands">
-        <div class="section-content">
-            <h2 class="section-title">Shop Popular Designers</h2>
-            <div class="brands-grid">
-                <div class="brand-card">
-                    <div class="brand-name">Supreme</div>
-                </div>
-                <div class="brand-card">
-                    <div class="brand-name">Chrome Hearts</div>
-                </div>
-                <div class="brand-card">
-                    <div class="brand-name">Rick Owens</div>
-                </div>
-                <div class="brand-card">
-                    <div class="brand-name">Balenciaga</div>
-                </div>
-                <div class="brand-card">
-                    <div class="brand-name">Stone Island</div>
-                </div>
-                <div class="brand-card">
-                    <div class="brand-name">Comme des Garçons</div>
-                </div>
-                <div class="brand-card">
-                    <div class="brand-name">Maison Margiela</div>
-                </div>
-                <div class="brand-card">
-                    <div class="brand-name">Kapital</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Trending Items -->
-    <section class="trending-items">
-        <div class="section-content">
-            <h2 class="section-title">Trending Now</h2>
-            <div class="product-grid">
-                <div class="product-card">
-                    <div class="product-image">👕</div>
-                    <div class="product-info">
-                        <div class="product-brand">Supreme</div>
-                        <div class="product-title">Box Logo Hoodie</div>
-                        <div class="product-price">$450</div>
-                        <div class="product-size">Size M</div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image">👟</div>
-                    <div class="product-info">
-                        <div class="product-brand">Nike</div>
-                        <div class="product-title">Air Jordan 1 Retro High</div>
-                        <div class="product-price">$325</div>
-                        <div class="product-size">Size 10</div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image">🧥</div>
-                    <div class="product-info">
-                        <div class="product-brand">Stone Island</div>
-                        <div class="product-title">Nylon Metal Jacket</div>
-                        <div class="product-price">$275</div>
-                        <div class="product-size">Size L</div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image">👖</div>
-                    <div class="product-info">
-                        <div class="product-brand">Chrome Hearts</div>
-                        <div class="product-title">Cross Patch Jeans</div>
-                        <div class="product-price">$850</div>
-                        <div class="product-size">Size 32</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+
+    <?php include '../backend/fetch_products.php'; ?>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
