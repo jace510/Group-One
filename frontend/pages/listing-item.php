@@ -406,7 +406,7 @@ $categories = $categoryCollection->find(['parent_id' => null])->toArray();
         <div class="main-nav-content">
             <?php foreach ($topCategories as $cat): ?>
                 <div class="nav-category">
-                    <a href="catalog.php?category=<?= urlencode($cat['slug']) ?>">
+                    <a href="browse.php?category=<?= urlencode($cat['slug']) ?>">
                         <?= htmlspecialchars($cat['name']) ?>
                     </a>
                 </div>

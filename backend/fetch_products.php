@@ -16,6 +16,7 @@ $products = $collection->find(
 <section class="trending-items">
     <div class="section-content">
         <h2 class="section-title">Trending Now</h2>
+
         <div class="product-grid">
 
             <?php foreach ($products as $product): ?>
@@ -30,24 +31,27 @@ $products = $collection->find(
                         }
                     }
                 }
-                
+
                 $img = !empty($product['photos']) ? $product['photos'][0]['url'] : 'default.jpg';
 
                 // Format price
                 $price = number_format($product['pricing']['asking_price'] ?? 0, 2);
                 ?>
+                <a href="pages/product-page.php?id=<?= urlencode((string) $product['_id']) ?>" class="product-card-link">
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="<?= htmlspecialchars($primaryPhoto) ?>"
+                                alt="<?= htmlspecialchars($product['title']) ?>">
+                        </div>
 
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="<?= htmlspecialchars($primaryPhoto) ?>" alt="Product Image">
+                        <div class="product-info">
+                            <div class="product-brand"><?= htmlspecialchars($product['brand']) ?></div>
+                            <div class="product-title"><?= htmlspecialchars($product['title']) ?></div>
+                            <div class="product-price">$<?= $price ?></div>
+                            <div class="product-size">Size <?= htmlspecialchars($product['size']) ?></div>
+                        </div>
                     </div>
-                    <div class="product-info">
-                        <div class="product-brand"><?= htmlspecialchars($product['brand']) ?></div>
-                        <div class="product-title"><?= htmlspecialchars($product['title']) ?></div>
-                        <div class="product-price">$<?= $price ?></div>
-                        <div class="product-size">Size <?= htmlspecialchars($product['size']) ?></div>
-                    </div>
-                </div>
+                </a>
             <?php endforeach; ?>
 
         </div>
