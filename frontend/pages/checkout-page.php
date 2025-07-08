@@ -275,7 +275,28 @@ include '../modal.php';
 
     <!-- Checkout Content -->
     <div class="checkout-container">
+        
         <div class="checkout-main">
+            <div class="checkout-main">
+
+    <?php
+    if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0): ?>
+        <h2>Your Cart</h2>
+        <ul>
+            <?php foreach ($_SESSION['cart'] as $item): ?>
+                <li>
+                    <strong><?= htmlspecialchars($item['name']) ?></strong><br>
+                    Quantity: <?= intval($item['quantity']) ?><br>
+                    Price: KES <?= number_format($item['price'], 2) ?><br>
+                    Subtotal: KES <?= number_format($item['price'] * $item['quantity'], 2) ?>
+                </li>
+                <hr>
+            <?php endforeach; ?>
+        </ul>
+    <?php else: ?>
+        <p>Your cart is empty.</p>
+    <?php endif; ?>
+
             <h1 class="page-title">Checkout</h1>
 
             <!-- Shipping Address -->
