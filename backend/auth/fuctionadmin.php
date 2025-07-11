@@ -1,6 +1,6 @@
 <?php
 // Start session if not already started
-if (session_status() == PHP_SESSION_NONE) {
+if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
@@ -18,7 +18,7 @@ function requireLogin() {
  * Ensure the logged-in user is an admin
  */
 function requireAdmin() {
-    requireLogin(); // First make sure user is logged in
+    requireLogin(); // Must be logged in
 
     if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
         header("Location: ../pages/dashboard.php?error=notadmin");
