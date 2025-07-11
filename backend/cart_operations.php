@@ -168,7 +168,7 @@ function getCart($cartsCollection, $productsCollection, $userId) {
                     'product_id' => $item['product_id']->__toString(),
                     'quantity' => $item['quantity'],
                     'product' => [
-                        'photo'=> $product['photos'][0] ?? null,,
+                        'photo'=> $product['photos'][0] ?? null,
                         'title' => $product['title'],
                         'brand' => $product['brand'],
                         'size' => $product['size'],
