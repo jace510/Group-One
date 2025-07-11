@@ -20,7 +20,7 @@ include '../../backend/nav.php';
     <title>Account Settings - Railed</title>
     <link rel="stylesheet" href="../index.css">
     <style>
-        /* Account Settings Main Content */
+        /* Account Settings for Main Content */
         .account-container {
             max-width: 1200px;
             margin: 0 auto;
