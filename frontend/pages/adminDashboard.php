@@ -1,4 +1,5 @@
 <?php
+<?php
 session_start();
 require_once '../../backend/includes/auth/functionadmin.php';
 requireAdmin();
@@ -35,7 +36,7 @@ requireAdmin();
             border-radius: 6px;
             text-decoration: none;
             font-size: 1.1rem;
-            transition: back-ground 0.2s;
+            transition: background 0.2s;
         }
         .admin-links a:hover {
             background: #444;
