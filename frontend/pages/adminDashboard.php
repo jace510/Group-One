@@ -1,5 +1,4 @@
 <?php
-<?php
 session_start();
 require_once '../../backend/includes/auth/functionadmin.php';
 requireAdmin();
