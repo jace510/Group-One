@@ -552,8 +552,8 @@ $relatedItems = iterator_to_array($relatedCursor);
     <div class="breadcrumb">
         <div class="breadcrumb-content">
             <a href="/group-one/frontend/home.php">Home</a> /
-            <a href="browse.php?category=<?= urlencode($category['slug']) ?>">
-                <?= htmlspecialchars($category['name']) ?>
+            <a href="browse.php?category=<?= urlencode($cat['name']) ?>">
+                <?= htmlspecialchars($cat['name']) ?>
             </a> /
             <?= htmlspecialchars($product['title']) ?>
         </div>
@@ -648,7 +648,7 @@ $relatedItems = iterator_to_array($relatedCursor);
         <div class="related-grid">
             <?php foreach ($relatedItems as $rel): ?>
                 <?php
-                $img = !empty($rel['photos'][0]['url']) ? $rel['images'][0]['url'] : 'default.jpg';
+                $img = !empty($rel['photos'][0]['url']) ? $rel['photos'][0]['url'] : 'default.jpg';
                 $price = number_format($rel['pricing']['asking_price'] ?? 0, 2);
                 ?>
                 <a href="product.php?id=<?= $rel['_id'] ?>" class="related-card">

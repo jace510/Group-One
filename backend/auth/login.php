@@ -63,18 +63,18 @@ if ($user_type === 'admin') {
     // Update last login time for admin
     $collection->updateOne(
         ["_id" => $user->_id],
-        ["$set" => ["last_login" => new UTCDateTime()]]
+        ['$set' => ["last_login" => new UTCDateTime()]]
     );
     
     // Redirect to admin dashboard
-    header("Location: ../../frontend/admin/dashboard.php");
+    header("Location: ../../frontend/admin_dashboard.php");
 } else {
     $_SESSION['role'] = 'customer';
     
     // Update last login time for customer
     $collection->updateOne(
         ["_id" => $user->_id],
-        ["$set" => ["last_login" => new UTCDateTime()]]
+        ['$set' => ["last_login" => new UTCDateTime()]]
     );
     
     // Redirect to customer area

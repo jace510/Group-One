@@ -24,28 +24,6 @@ if (!in_array($user_type, ['customer', 'admin'])) {
     die("Invalid user type.");
 }
 
-// Optional: Add admin registration restrictions
-// You might want to require an admin key or restrict admin registration
-if ($user_type === 'admin') {
-    // Option 1: Require admin key
-    $admin_key = $_POST['admin_key'] ?? '';
-    $valid_admin_key = 'your_secret_admin_key_here'; // Store this securely, preferably in environment variables
-    
-    if ($admin_key !== $valid_admin_key) {
-        die("Invalid admin registration key.");
-    }
-    
-    // Option 2: Or restrict admin registration to specific domains
-    // $allowed_admin_domains = ['yourdomain.com', 'admin.yourdomain.com'];
-    // $email_domain = substr(strrchr($email, "@"), 1);
-    // if (!in_array($email_domain, $allowed_admin_domains)) {
-    //     die("Admin registration is restricted to authorized domains.");
-    // }
-    
-    // Option 3: Or require existing admin approval (set status to pending)
-    // $status = 'pending_approval';
-}
-
 // Hash the password
 $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
@@ -113,7 +91,7 @@ $insertResult = $collection->insertOne($newUser);
 if ($insertResult->getInsertedCount() === 1) {
     // Different redirect based on user type
     if ($user_type === 'admin') {
-        header("Location: ../../frontend/admin/dashboard.php?auth=register_success&show=login");
+        header("Location: ../../frontend/admin_dashboard.php?auth=register_success&show=login");
     } else {
         header("Location: ../../frontend/home.php?auth=register_success&show=login");
     }
