@@ -716,6 +716,7 @@ include '../../backend/nav.php';
             </div>
         </div>
     </footer>
+    
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {

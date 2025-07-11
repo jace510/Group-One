@@ -755,6 +755,26 @@ $relatedItems = iterator_to_array($relatedCursor);
                     alert('Please select a size first.');
                 }
             });
+
+            // Wishlist button functionality
+            const wishlistBtn = document.getElementById('wishlistBtn');
+            let isWishlisted = false;
+
+            wishlistBtn.addEventListener('click', function () {
+                isWishlisted = !isWishlisted;
+                if (isWishlisted) {
+                    this.textContent = 'Remove from Cart';
+                    this.style.background = '#097969';
+                    this.style.color = '#fff';
+                    this.style.borderColor = '#097969';
+                } else {
+                    this.textContent = 'Add to Cart';
+                    this.style.background = '#fff';
+                    this.style.color = '#000';
+                    this.style.borderColor = '#000';
+                }
+            });
+
             // Related product click
             const relatedCards = document.querySelectorAll('.related-card');
             relatedCards.forEach(card => {
