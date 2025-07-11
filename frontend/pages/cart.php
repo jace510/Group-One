@@ -6,36 +6,93 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-// Initialize cart if not exists
-if (!isset($_SESSION['cart'])) {
-    $_SESSION['cart'] = [];
+require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__ . '/../../backend/mongo.php'; // must define $client (MongoDB\Client)
+
+use MongoDB\BSON\ObjectId;
+
+// Get cart data from MongoDB
+$cartsCollection = $client->selectCollection("Railed", "carts");
+$productsCollection = $client->selectCollection("Railed", "products");
+
+// Fetch cart data using the same logic as cart_operations.php
+function getCartData($cartsCollection, $productsCollection, $userId)
+{
+    try {
+        $cart = $cartsCollection->findOne(['user_id' => new ObjectId($userId)]);
+
+        if (!$cart) {
+            return ['items' => [], 'total' => 0, 'item_count' => 0];
+        }
+
+        $cartItems = [];
+        $total = 0;
+
+        foreach ($cart['items'] as $item) {
+            $product = $productsCollection->findOne(['_id' => $item['product_id']]);
+
+            if ($product && $product['status'] === 'available') {
+                $itemTotal = $product['pricing']['asking_price'] * $item['quantity'];
+                $total += $itemTotal;
+
+                $cartItems[] = [
+                    'id' => $item['product_id']->__toString(),
+                    'name' => $product['title'],
+                    'brand' => $product['brand'],
+                    'price' => $product['pricing']['asking_price'],
+                    'quantity' => $item['quantity'],
+                    'size' => $product['size'],
+                    'color' => $product['color'],
+                    'condition' => $product['condition'],
+                    'photo' => isset($product['photos'][0]) ? (string) $product['photos'][0]['url'] : null,
+                    'item_total' => $itemTotal
+                ];
+            }
+        }
+
+        return [
+            'items' => $cartItems,
+            'total' => $total,
+            'item_count' => count($cartItems)
+        ];
+
+    } catch (Exception $e) {
+        return ['items' => [], 'total' => 0, 'item_count' => 0];
+    }
 }
+
+// Get cart data
+$cartData = getCartData($cartsCollection, $productsCollection, $_SESSION['user_id']);
 
 // Process form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete_order'])) {
     // Validate required fields
     $required_fields = ['first_name', 'last_name', 'address', 'city', 'state', 'zip', 'country', 'card_number', 'expiry', 'cvv', 'cardholder_name'];
     $errors = [];
-    
+
     foreach ($required_fields as $field) {
         if (empty($_POST[$field])) {
             $errors[] = ucfirst(str_replace('_', ' ', $field)) . ' is required';
         }
     }
-    
-    if (empty($errors) && !empty($_SESSION['cart'])) {
+
+    if (empty($errors) && !empty($cartData['items'])) {
         // Process the order (in a real app, you'd save to database, process payment, etc.)
         $order_id = 'ORD' . date('Ymd') . rand(1000, 9999);
         $_SESSION['last_order'] = [
             'order_id' => $order_id,
-            'items' => $_SESSION['cart'],
-            'total' => calculateTotal($_SESSION['cart']),
+            'items' => $cartData['items'],
+            'total' => calculateTotal($cartData['items']),
             'date' => date('Y-m-d H:i:s')
         ];
-        
-        // Clear cart after successful order
-        $_SESSION['cart'] = [];
-        
+
+        // Clear cart after successful order using cart_operations.php logic
+        try {
+            $cartsCollection->deleteOne(['user_id' => new ObjectId($_SESSION['user_id'])]);
+        } catch (Exception $e) {
+            // Handle error if needed
+        }
+
         // Redirect to success page
         header("Location: order_success.php?order_id=" . $order_id);
         exit();
@@ -43,9 +100,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete_order'])) {
 }
 
 // Calculate totals
-function calculateTotal($cart) {
+function calculateTotal($cartItems)
+{
     $subtotal = 0;
-    foreach ($cart as $item) {
+    foreach ($cartItems as $item) {
         $subtotal += $item['price'] * $item['quantity'];
     }
     $shipping = 25.00;
@@ -53,54 +111,16 @@ function calculateTotal($cart) {
     return $subtotal + $shipping + $tax;
 }
 
-function calculateSubtotal($cart) {
+function calculateSubtotal($cartItems)
+{
     $subtotal = 0;
-    foreach ($cart as $item) {
+    foreach ($cartItems as $item) {
         $subtotal += $item['price'] * $item['quantity'];
     }
     return $subtotal;
 }
 
-// Demo cart items if cart is empty (for testing)
-if (empty($_SESSION['cart'])) {
-    $_SESSION['cart'] = [
-        [
-            'id' => 1,
-            'name' => 'Designer Leather Jacket',
-            'brand' => 'Saint Laurent',
-            'price' => 1250.00,
-            'quantity' => 1,
-            'size' => 'Medium',
-            'color' => 'Black',
-            'condition' => 'Excellent',
-            'image' => '🧥'
-        ],
-        [
-            'id' => 2,
-            'name' => 'Designer Sneakers',
-            'brand' => 'Golden Goose',
-            'price' => 425.00,
-            'quantity' => 1,
-            'size' => 'US 9',
-            'color' => 'White/Gold',
-            'condition' => 'Very Good',
-            'image' => '👟'
-        ],
-        [
-            'id' => 3,
-            'name' => 'Vintage Handbag',
-            'brand' => 'Chanel',
-            'price' => 2850.00,
-            'quantity' => 1,
-            'size' => 'Medium',
-            'color' => 'Black Quilted',
-            'condition' => 'Good',
-            'image' => '👜'
-        ]
-    ];
-}
-
-$subtotal = calculateSubtotal($_SESSION['cart']);
+$subtotal = calculateSubtotal($cartData['items']);
 $shipping = 25.00;
 $tax = $subtotal * 0.08;
 $total = $subtotal + $shipping + $tax;
@@ -471,7 +491,7 @@ include '../../backend/nav.php';
 
     <!-- Checkout Content -->
     <div class="checkout-container">
-        <?php if (empty($_SESSION['cart'])): ?>
+        <?php if (empty($cartData['items'])): ?>
             <div class="empty-cart">
                 <div class="empty-cart-icon">🛒</div>
                 <h3>Your cart is empty</h3>
@@ -497,11 +517,13 @@ include '../../backend/nav.php';
                         <div class="form-row">
                             <div class="form-group">
                                 <label class="form-label">First Name</label>
-                                <input type="text" name="first_name" class="form-input" placeholder="Enter first name" required>
+                                <input type="text" name="first_name" class="form-input" placeholder="Enter first name"
+                                    required>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Last Name</label>
-                                <input type="text" name="last_name" class="form-input" placeholder="Enter last name" required>
+                                <input type="text" name="last_name" class="form-input" placeholder="Enter last name"
+                                    required>
                             </div>
                         </div>
                         <div class="form-group">
@@ -509,7 +531,8 @@ include '../../backend/nav.php';
                             <input type="text" name="address" class="form-input" placeholder="Street address" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" name="address_2" class="form-input" placeholder="Apartment, suite, etc. (optional)">
+                            <input type="text" name="address_2" class="form-input"
+                                placeholder="Apartment, suite, etc. (optional)">
                         </div>
                         <div class="form-row">
                             <div class="form-group">
@@ -549,12 +572,14 @@ include '../../backend/nav.php';
                         <h2 class="section-title">Payment Method</h2>
                         <div class="form-group">
                             <label class="form-label">Card Number</label>
-                            <input type="text" name="card_number" class="form-input" placeholder="1234 5678 9012 3456" maxlength="19" required>
+                            <input type="text" name="card_number" class="form-input" placeholder="1234 5678 9012 3456"
+                                maxlength="19" required>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
                                 <label class="form-label">Expiry Date</label>
-                                <input type="text" name="expiry" class="form-input" placeholder="MM/YY" maxlength="5" required>
+                                <input type="text" name="expiry" class="form-input" placeholder="MM/YY" maxlength="5"
+                                    required>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">CVV</label>
@@ -563,7 +588,8 @@ include '../../backend/nav.php';
                         </div>
                         <div class="form-group">
                             <label class="form-label">Cardholder Name</label>
-                            <input type="text" name="cardholder_name" class="form-input" placeholder="Name on card" required>
+                            <input type="text" name="cardholder_name" class="form-input" placeholder="Name on card"
+                                required>
                         </div>
                         <div class="checkbox-group">
                             <input type="checkbox" class="checkbox" id="billing-same" name="billing_same" value="1">
@@ -575,7 +601,8 @@ include '../../backend/nav.php';
                     <div class="checkout-section">
                         <h2 class="section-title">Order Notes (Optional)</h2>
                         <div class="form-group">
-                            <textarea name="order_notes" class="form-input" rows="4" placeholder="Special delivery instructions or notes..."></textarea>
+                            <textarea name="order_notes" class="form-input" rows="4"
+                                placeholder="Special delivery instructions or notes..."></textarea>
                         </div>
                     </div>
 
@@ -588,9 +615,20 @@ include '../../backend/nav.php';
                 <div class="order-summary">
                     <h3>Order Summary</h3>
 
-                    <?php foreach ($_SESSION['cart'] as $item): ?>
+                    <?php foreach ($cartData['items'] as $item): ?>
                         <div class="order-item">
-                            <div class="item-image"><?php echo htmlspecialchars($item['image']); ?></div>
+                            <div class="item-image">
+                                <?php if (is_string($item['photo']) && strpos($item['photo'], 'http') === 0): ?>
+                                    <img src="<?php echo htmlspecialchars($item['photo']); ?>"
+                                        alt="<?php echo htmlspecialchars($item['name']); ?>"
+                                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
+                                <?php else: ?>
+                                    <img src="<?php echo htmlspecialchars($item['photo']); ?>"
+                                        alt="<?php echo htmlspecialchars($item['name']); ?>"
+                                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
+                                <?php endif; ?>
+
+                            </div>
                             <div class="item-details">
                                 <div class="item-brand"><?php echo htmlspecialchars($item['brand']); ?></div>
                                 <div class="item-title"><?php echo htmlspecialchars($item['name']); ?></div>
@@ -683,7 +721,7 @@ include '../../backend/nav.php';
         document.addEventListener('DOMContentLoaded', function () {
             const form = document.querySelector('form');
             const completeOrderBtn = document.getElementById('complete-order-btn');
-            
+
             // Add form ID for button reference
             if (form) {
                 form.id = 'checkout-form';
@@ -740,11 +778,11 @@ include '../../backend/nav.php';
             if (completeOrderBtn) {
                 completeOrderBtn.addEventListener('click', function (e) {
                     e.preventDefault();
-                    
+
                     // Validate form
                     const requiredInputs = form.querySelectorAll('[required]');
                     let isValid = true;
-                    
+
                     requiredInputs.forEach(input => {
                         if (!input.value.trim()) {
                             input.classList.add('error');
@@ -758,7 +796,7 @@ include '../../backend/nav.php';
                         // Add loading state
                         this.innerHTML = 'Processing...';
                         this.disabled = true;
-                        
+
                         // Submit form
                         setTimeout(() => {
                             form.submit();
@@ -781,4 +819,4 @@ include '../../backend/nav.php';
     </script>
 </body>
 
-</html> 
+</html>
