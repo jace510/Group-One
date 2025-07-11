@@ -1,9 +1,7 @@
 <?php
 include '../../backend/auth/header.php';
 include '../../backend/nav.php';
-
 include '../modal.php';
-
 require '../../backend/mongo.php';
 use MongoDB\BSON\ObjectId;
 
@@ -554,7 +552,7 @@ $relatedItems = iterator_to_array($relatedCursor);
     <div class="breadcrumb">
         <div class="breadcrumb-content">
             <a href="/group-one/frontend/home.php">Home</a> /
-            <a href="catalog.php?category=<?= urlencode($category['slug']) ?>">
+            <a href="browse.php?category=<?= urlencode($category['slug']) ?>">
                 <?= htmlspecialchars($category['name']) ?>
             </a> /
             <?= htmlspecialchars($product['title']) ?>
@@ -608,11 +606,9 @@ $relatedItems = iterator_to_array($relatedCursor);
             <div class="size-section">
                 <div class="size-label">Available Sizes</div>
                 <div class="size-options">
-                    <?php foreach ($product['stock'] ?? [] as $stock): ?>
-                        <div class="size-option <?= !$stock['is_available'] ? 'unavailable' : '' ?>">
-                            <?= htmlspecialchars($stock['size']) ?>
+                        <div class="size-option">
+                            <span><?= htmlspecialchars($product['size'])?></span>
                         </div>
-                    <?php endforeach; ?>
                 </div>
             </div>
 
@@ -759,26 +755,6 @@ $relatedItems = iterator_to_array($relatedCursor);
                     alert('Please select a size first.');
                 }
             });
-
-            // Wishlist button functionality
-            const wishlistBtn = document.getElementById('wishlistBtn');
-            let isWishlisted = false;
-
-            wishlistBtn.addEventListener('click', function () {
-                isWishlisted = !isWishlisted;
-                if (isWishlisted) {
-                    this.textContent = 'Remove from Wishlist ♥';
-                    this.style.background = '#ff4444';
-                    this.style.color = '#fff';
-                    this.style.borderColor = '#ff4444';
-                } else {
-                    this.textContent = 'Add to Wishlist ♡';
-                    this.style.background = '#fff';
-                    this.style.color = '#000';
-                    this.style.borderColor = '#000';
-                }
-            });
-
             // Related product click
             const relatedCards = document.querySelectorAll('.related-card');
             relatedCards.forEach(card => {
@@ -800,6 +776,126 @@ $relatedItems = iterator_to_array($relatedCursor);
                 // Add search logic here
             });
         });
+
+        // Add this to your existing script section in the product page
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get product ID from URL or PHP
+            const productId = '<?= $product["_id"] ?>';
+
+            // Thumbnail image switching (keep existing code)
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            const mainImage = document.getElementById('mainImage');
+
+            thumbnails.forEach(thumb => {
+                thumb.addEventListener('click', function () {
+                    thumbnails.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    const imageData = this.dataset.image;
+                    mainImage.innerHTML = `<div class="product-badge">NEW</div><img src="${imageData}" alt="Main Image">`;
+                });
+            });
+
+            // Size selection (keep existing code)
+            const sizeOptions = document.querySelectorAll('.size-option:not(.unavailable)');
+            sizeOptions.forEach(size => {
+                size.addEventListener('click', function () {
+                    sizeOptions.forEach(s => s.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+
+            // Updated Buy Now button functionality
+            const buyBtn = document.getElementById('buyBtn');
+            buyBtn.addEventListener('click', function () {
+                const selectedSize = document.querySelector('.size-option.selected');
+                if (!selectedSize) {
+                    alert('Please select a size first.');
+                    return;
+                }
+
+                // For now, just add to cart (you can later redirect to checkout)
+                addToCart(productId);
+            });
+
+            // Updated Add to Cart button functionality
+            const cartBtn = document.getElementById('wishlistBtn');
+            cartBtn.addEventListener('click', function () {
+                addToCart(productId);
+            });
+
+        
+            // Function to update cart count in header
+            function updateCartCount() {
+                fetch('../../backend/cart_operations.php?action=get_cart')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            const cartCountElement = document.getElementById('cartCount');
+                            if (cartCountElement) {
+                                cartCountElement.textContent = data.cart.item_count || 0;
+                            }
+                        }
+                    })
+                    .catch(error => console.error('Error updating cart count:', error));
+            }
+
+            // Load initial cart count
+            updateCartCount();
+        });
+
+        // Add this function to handle authentication errors
+        function handleAuthError(data) {
+            if (data.message && data.message.includes('Unauthorized')) {
+                // Redirect to login page
+                alert('Please login to add items to cart');
+                window.location.href = '../../backend/auth/login.php';
+                return true;
+            }
+            return false;
+        }
+
+        // Update your addToCart function to use this
+        function addToCart(productId) {
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = 'Adding...';
+            button.disabled = true;
+
+            fetch('../../backend/cart_operations.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `action=add_to_cart&product_id=${productId}`
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        button.textContent = 'Added to Cart ✓';
+                        button.style.background = '#00aa44';
+                        updateCartCount();
+
+                        setTimeout(() => {
+                            button.textContent = originalText;
+                            button.style.background = '';
+                            button.disabled = false;
+                        }, 2000);
+                    } else {
+                        // Check for authentication error
+                        if (!handleAuthError(data)) {
+                            alert(data.message || 'Error adding to cart');
+                        }
+                        button.textContent = originalText;
+                        button.disabled = false;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error adding to cart. Please try again.');
+                    button.textContent = originalText;
+                    button.disabled = false;
+                });
+        }
     </script>
 </body>
 
