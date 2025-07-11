@@ -21,7 +21,8 @@ $collection = $client->Railed->users;
 $user = $collection->findOne(['email' => $email]);
 
 if ($user && password_verify($password, $user['password'])) {
-    $_SESSION['user_id'] = (string) $user['_id']; // Store MongoDB _id as session string
+    $_SESSION['user_id'] = (string) $user['_id'];
+    $_SESSION['username'] = $user['username']; // Store MongoDB _id as session string
 
     header("Location: ../../frontend/" . $redirect);
     exit();
