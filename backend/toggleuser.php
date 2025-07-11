@@ -1,6 +1,6 @@
 <?php
 require_once 'vendor/autoload.php';
-require_once 'includes/auth/functions.php';
+require_once 'includes/auth/functionadmin.php';
 requireAdmin();
 
 if (!isset($_GET['id'])) {
