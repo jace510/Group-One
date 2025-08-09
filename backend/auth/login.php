@@ -71,7 +71,7 @@ if ($user_type === 'admin') {
 } else {
     $_SESSION['role'] = 'customer';
     
-    // Update last login time for customer
+    // Update last login time for current custome
     $collection->updateOne(
         ["_id" => $user->_id],
         ['$set' => ["last_login" => new UTCDateTime()]]

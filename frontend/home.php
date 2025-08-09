@@ -36,7 +36,7 @@
     </nav>
 
 
-    <!-- Hero Section -->
+    <!-- Hero Section with call for primary action -->
     <section class="hero">
         <div class="hero-content">
             <h1>The Global Marketplace for Fashion</h1>
@@ -53,7 +53,7 @@
 
     <?php include '../backend/fetch_products.php'; ?>
 
-    <!-- Footer -->
+    <!-- Footer-->
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-grid">

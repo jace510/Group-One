@@ -63,7 +63,7 @@ if ($user_type === 'admin') {
         "view_analytics",
         "system_settings"
     ]; // Default admin permissions
-    $newUser["status"] = "active"; // or "pending_approval" if you want manual approval
+    $newUser["status"] = "active"; // or "pending_approval" in case you want manual approval
 } else {
     $newUser["role"] = "customer";
     $newUser["status"] = "active";
