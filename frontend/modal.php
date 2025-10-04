@@ -21,7 +21,7 @@
 
       <!-- Admin Indicator (hidden by default) -->
       <div id="adminIndicator" class="admin-indicator" style="display: none;">
-        🔒 Admin Login Portal
+         Admin Login Portal
       </div>
 
       <!-- Login Form -->
